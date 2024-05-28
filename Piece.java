@@ -1,32 +1,24 @@
 public class Piece {
-    private int row;
-    private int col;
     private boolean isWhite;
+
     public Piece() {
-        this.row = 0;
-        this.col = 0;
         this.isWhite = true;
     }
-    public Piece(int row, int col, boolean isWhite) {
-        this.row = row;
-        this.col = col;
+
+    public Piece(boolean isWhite) {
         this.isWhite = isWhite;
     }
 
-    public int getRow() { return row; }
-    public int getCol() { return col; }
     public boolean isWhite() { return isWhite; }
 
     // public moveTo() {}
-
-
 }
 
 class Pawn extends Piece {
     private boolean hasMoved;
 
-    public Pawn(int row, int col, boolean isWhite) {
-        super(row, col, isWhite);
+    public Pawn(boolean isWhite) {
+        super(isWhite);
         hasMoved = false;
     }
 
@@ -39,8 +31,8 @@ class Pawn extends Piece {
 class Rook extends Piece {
     public boolean hasMoved;
 
-    public Rook(int row, int col, boolean isWhite, boolean hasMoved) {
-        super(row, col, isWhite);
+    public Rook(boolean isWhite, boolean hasMoved) {
+        super(isWhite);
         this.hasMoved = hasMoved;
     }
 
@@ -48,18 +40,18 @@ class Rook extends Piece {
 }
 class Knight extends Piece {
     // can jump pieces
-    public Knight(int row, int col, boolean isWhite) {
-        super(row, col, isWhite);
+    public Knight(boolean isWhite) {
+        super(isWhite);
     }
 }
 class Bishop extends Piece {
-    public Bishop(int row, int col, boolean isWhite) {
-        super(row, col, isWhite);
+    public Bishop(boolean isWhite) {
+        super(isWhite);
     }
 }
 class Queen extends Piece {
-    public Queen(int row, int col, boolean isWhite) {
-        super(row, col, isWhite);
+    public Queen(boolean isWhite) {
+        super(isWhite);
     }
 }
 class King extends Piece {
@@ -68,7 +60,7 @@ class King extends Piece {
     // public boolean canCastleKingside() {}
     // public boolean canCastleQueenside() {}
 
-    public King(int row, int col, boolean isWhite) {
-        super(row, col, isWhite);
+    public King(boolean isWhite) {
+        super(isWhite);
     }
 }
