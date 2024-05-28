@@ -1,10 +1,10 @@
-public class ChessBoardArray {
+public class Board {
     private final Piece[][] board = new Piece[8][8];
     private int length = 8;
     // black pieces
     // 4 lines of space
     // white pieces
-    public ChessBoardArray() {
+    public Board() {
         // black pawns
         for (int i = 0; i < length; i++) {
             board[1][i] = new Pawn(false);
