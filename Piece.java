@@ -10,8 +10,9 @@ public class Piece {
     }
 
     public boolean isWhite() { return isWhite; }
-
     // public moveTo() {}
+
+    public String toString() {return "X";}
 }
 
 class Pawn extends Piece {
@@ -24,6 +25,7 @@ class Pawn extends Piece {
 
     public boolean hasMoved() { return hasMoved; }
 
+    public String toString() {return "P";}
     // public void convertToQueen();
     // add more later
 }
@@ -37,22 +39,26 @@ class Rook extends Piece {
     }
 
     public boolean hasMoved() { return hasMoved; }
+    public String toString() {return "R";}
 }
 class Knight extends Piece {
     // can jump pieces
     public Knight(boolean isWhite) {
         super(isWhite);
     }
+    public String toString() {return "N";}
 }
 class Bishop extends Piece {
     public Bishop(boolean isWhite) {
         super(isWhite);
     }
+    public String toString() {return "B";}
 }
 class Queen extends Piece {
     public Queen(boolean isWhite) {
         super(isWhite);
     }
+    public String toString() {return "Q";}
 }
 class King extends Piece {
     private boolean hasMoved;
@@ -63,4 +69,5 @@ class King extends Piece {
     public King(boolean isWhite) {
         super(isWhite);
     }
+    public String toString() {return "K";}
 }
