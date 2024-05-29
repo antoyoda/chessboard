@@ -11,7 +11,7 @@ public class Board {
         }
         // white pawns
         for (int i = 0; i < length; i++) {
-            board[1][i] = new Pawn(true);
+            board[6][i] = new Pawn(true);
         }
         // black pieces
         board[0][0] = new Rook(false, false); // second false is Boolean hasMoved
@@ -33,4 +33,43 @@ public class Board {
         board[7][4] = new King(true);
     }
 
+    public String toString() {
+      String output = "";
+      for (int i = 0; i < length; i++) {
+        for (int j = 0; j < length; j++) {
+          if (j == 0) {
+            output += (i+1 + " ");
+          }
+          if (board[i][j] != null) {
+            output += board[i][j].toString();
+            output += " ";
+          }
+          else {
+            output += "  ";
+          }
+        }
+          output += "\n";
+      }
+      output += "  a b c d e f g h";
+      return output;
+    }
+    // no numbers
+    // public String toString() {
+    //   String output = "";
+    //   for (int i = 0; i < length; i++) {
+    //     for (int j = 0; j < length; j++) {
+    //       if (board[i][j] != null) {
+    //         output += board[i][j].toString();
+    //         output += " ";
+    //       }
+    //       else {
+    //         output += "  ";
+    //       }
+    //     }
+    //     if (i < 7) {
+    //       output += "\n";
+    //     }
+    //   }
+    //   return output;
+    // }
 }
