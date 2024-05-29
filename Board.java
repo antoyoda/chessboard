@@ -38,7 +38,7 @@ public class Board {
       for (int i = 0; i < length; i++) {
         for (int j = 0; j < length; j++) {
           if (j == 0) {
-            output += (i+1 + " ");
+            output += (8-i + " ");
           }
           if (board[i][j] != null) {
             output += board[i][j].toString();
