@@ -41,8 +41,15 @@ public class Board {
             output += (8-i + " ");
           }
           if (board[i][j] != null) {
-            output += board[i][j].toString();
-            output += " ";
+            if (board[i][j].isWhite()) {
+              // 34 is blue, 31 is red, 0 is default
+              output += "\u001B[34m" + board[i][j].toString() + "\u001B[0m";
+              output += " ";
+            }
+            else {
+              output += "\u001B[31m" + board[i][j].toString() + "\u001B[0m";
+              output += " ";
+            }
           }
           else {
             output += "  ";
@@ -53,14 +60,21 @@ public class Board {
       output += "  a b c d e f g h";
       return output;
     }
-    // no numbers
+    // // no numbers
     // public String toString() {
     //   String output = "";
     //   for (int i = 0; i < length; i++) {
     //     for (int j = 0; j < length; j++) {
     //       if (board[i][j] != null) {
-    //         output += board[i][j].toString();
-    //         output += " ";
+    //         if (board[i][j].isWhite()) {
+    //             // 34 is blue, 31 is red, 0 is default
+    //             output += "\u001B[34m" + board[i][j].toString() + "\u001B[0m";
+    //             output += " ";
+    //         }
+    //         else {
+    //           output += "\u001B[31m" + board[i][j].toString() + "\u001B[0m";
+    //           output += " ";
+    //         }
     //       }
     //       else {
     //         output += "  ";
