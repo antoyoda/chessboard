@@ -14,7 +14,7 @@ public class Piece {
 
     public String toString() {return "X";}
 
-    public boolean isLegalMove() {
+    public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
       return false;
     }
 }
@@ -26,17 +26,33 @@ class Pawn extends Piece {
 
     public String toString() {return "P";}
 
-    // public boolean isLegalMove(int startX, int startY,  int endX, int endY) {
-    //   if (isWhite()) {
-    //     if (startY == 6) {
-    //       if (!(endY == 5 || endY = 4) && (endX == startX-1 || endX == startX || endX == startX+1)) {
-    //         return false;
-    //       }
-    //     }
-    //   }
-    // }
-    // public void convertToQueen();
-    // add more later
+    public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
+    // add en passant later
+    Piece a = board.getPiece(endX, endY);
+    if (isWhite()) {
+        // move up one
+        if ((endY == startY-1) && (endX == startX)) {
+            if (a == null) { return true; }
+        }
+        // move up two
+        Piece b = board.getPiece(endX, endY-1);
+        if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
+            if (a == null && b == null) { return true; }
+        }
+        // need to check captures
+    }
+    // black Piece
+    else {
+        if ((endY == startY+1)  && (endX == startX)) {
+            if (a == null) {return true;}
+        }
+        Piece b = board.getPiece(endX, endY+1);
+        if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
+            if (a == null && b == null) { return true; }
+        }
+    }
+    return false;
+    }
 }
 
 class Rook extends Piece {
