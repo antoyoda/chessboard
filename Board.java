@@ -21,7 +21,7 @@ public class Board {
         board[0][2] = new Bishop(false);
         board[0][5] = new Bishop(false);
         board[0][3] = new Queen(false);
-        board[0][4] = new King(false);
+        board[0][4] = new King(false); // king doesn't have hasMoved in constructor because it cannot be promoted
         // white pieces
         board[7][0] = new Rook(true, false);
         board[7][7] = new Rook(true, false);
@@ -31,6 +31,15 @@ public class Board {
         board[7][5] = new Bishop(true);
         board[7][3] = new Queen(true);
         board[7][4] = new King(true);
+    }
+
+    public void movePiece(int startX, int startY, int endX, int endY) {
+      if (board[startY][startX] == null) {
+        System.out.print("No piece there.");
+        return;
+      }
+      board[endY][endX] = board[startY][startX];
+      board[startY][startX] = null;
     }
 
     public String toString() {

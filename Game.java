@@ -1,35 +1,17 @@
 import java.util.Scanner;
 
 public class Game {
+  private Board board = new Board();
   private Player white;
   private Player black;
-  private Board board = new Board();
+  private Player activePlayer;
 
   public Game() {
-    white = null;
-    black = null;
-  }
-
-  public String getNameWhite() {
-    if (white != null) {
-      return white.getName();
-    }
-    else {
-      return null;
-    }
-  }
-
-  public String getNameBlack() {
-    if (black != null) {
-      return black.getName();
-    }
-    else {
-      return null;
-    }
+    // nothing needed, could maybe switch start to static
   }
 
   // initializes player names
-  public void start() {
+  private void getPlayerNames() {
     Scanner in = new Scanner(System.in);
     System.out.print("Welcome, Player 1. You are playing with the white pieces. ");
     String name1 = "";
@@ -57,8 +39,45 @@ public class Game {
 
     in.close();
   }
-  // gets valid chess notation move and makes sure it can be played
-  public void getMove() {
+
+  public void start() {
+    getPlayerNames();
+    activePlayer = white;
+
+    System.out.println("Game started between " + white.getName() + " and " black.getName());
+
+    while (!isGameOver()) {
+      System.out.println(board);
+      getMove();
+      switchTurn();
+    }
+
+    System.out.println("The game is over!");
   }
 
+  private boolean isGameOver() {
+    // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
+
+  }
+
+  private boolean isCheckMate() {
+
+  }
+
+  private boolean isStaleMate() {
+
+  }
+
+  // gets valid chess notation move and makes sure it can be played
+  private void getMove(boolean isWhite) {
+    // print: name, it's your move.
+    // input piece you want to move
+    // check if piece is there and right color, and if it has legal moves
+    // input where you want to move piece
+    // check if it's possible to move there
+  }
+
+  private void switchTurn() {
+    activePlayer = (activePlayer == white) ? black : white;
+  }
 }
