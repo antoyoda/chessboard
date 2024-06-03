@@ -33,6 +33,10 @@ public class Board {
         board[7][4] = new King(true);
     }
 
+    public Piece getPiece(int xPos, int yPos) {
+      return board[yPos][xPos];
+    }
+
     public void movePiece(int startX, int startY, int endX, int endY) {
       if (board[startY][startX] == null) {
         System.out.print("No piece there.");
