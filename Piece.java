@@ -26,15 +26,15 @@ class Pawn extends Piece {
 
     public String toString() {return "P";}
 
-    public boolean isLegalMove(int startX, int startY,  int endX, int endY) {
-      if (isWhite()) {
-        if (startY == 7) {
-          if (!(endY == 6 || endY = 5) && (endX == startX-1 || endX == startX || endX == startX+1)) {
-            return false;
-          }
-        }
-      }
-    }
+    // public boolean isLegalMove(int startX, int startY,  int endX, int endY) {
+    //   if (isWhite()) {
+    //     if (startY == 6) {
+    //       if (!(endY == 5 || endY = 4) && (endX == startX-1 || endX == startX || endX == startX+1)) {
+    //         return false;
+    //       }
+    //     }
+    //   }
+    // }
     // public void convertToQueen();
     // add more later
 }
