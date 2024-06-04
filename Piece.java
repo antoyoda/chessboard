@@ -65,6 +65,39 @@ class Rook extends Piece {
         this.hasMoved = hasMoved;
     }
 
+    @Override
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+        if (endX == startX){
+            if (endY>startY){
+                for(int i = endY; i>startY; i--){
+                    if(!(board.getPiece(startX, i) == null)){ return false; }
+                }
+            }
+            else {
+                for(int i = startY; i>=endY; i--){
+                    if(!(board.getPiece(startX, i) == null)){ return false; }
+                }
+            }
+        }
+        else if (endY == startY){
+            if (endX>startX){
+                for(int i = endX; i>startX; i--){
+                    if(!(board.getPiece(i,startY) == null)){
+                        return false;
+                    }
+                }
+            }
+            else {
+                for(int i = startX; i<=endX; i--) {
+                    if (!(board.getPiece(i, startY) == null)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean hasMoved() { return hasMoved; }
     public String toString() {return "R";}
 }

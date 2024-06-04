@@ -14,7 +14,7 @@ public class ChessBoardViewer {
 
 
     frame.setSize(500, 500);
-    frame.setTitle("PENISCUM");
+    frame.setTitle("PennisCum");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     ChessBoardComponent component = new ChessBoardComponent();
