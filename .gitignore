@@ -1,0 +1,8 @@
+# compiled class file
+*.class
+
+# unnecessary file
+.DS_Store
+
+# idea source code environment
+.idea/
