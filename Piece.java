@@ -43,18 +43,19 @@ class Pawn extends Piece {
         }
         // black Piece
         else {
+            // move down one
             if ((endY == startY+1)  && (endX == startX)) {
                 if (a == null) {return true;}
             }
+            // move down two
             Piece b = board.getPiece(endX, endY+1);
             if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
                 if (a == null && b == null) { return true; }
             }
         }
         return false;
-
+        }
     }
-}
 
 class Rook extends Piece {
     public boolean hasMoved;
