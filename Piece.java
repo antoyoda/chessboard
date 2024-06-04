@@ -27,55 +27,32 @@ class Pawn extends Piece {
     public String toString() {return "P";}
 
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
-<<<<<<< HEAD
         // add en passant later
         Piece a = board.getPiece(endX, endY);
         if (isWhite()) {
-            if((endY==startY-1)  && (endX == startX)) {
-                if(a == null) {return true;}
+            // move up one
+            if ((endY == startY-1) && (endX == startX)) {
+                if (a == null) { return true; }
             }
-            Piece b = board.getPiece(endX, endY -1);
-            if((startX == 6) && (endY==startY-2)  && (endX == startX)) {
-                if(a == null && b == null) { return true; }
+            // move up two
+            Piece b = board.getPiece(endX, endY-1);
+            if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
+                if (a == null && b == null) { return true; }
             }
+            // need to check captures
         }
-        else{
-            if((endY==startY+1)  && (endX == startX)) {
-                if(a == null) {return true;}
+        // black Piece
+        else {
+            if ((endY == startY+1)  && (endX == startX)) {
+                if (a == null) {return true;}
             }
-            Piece b = board.getPiece(endX, endY +1);
-            if((startX == 1) && (endY==startY+2)  && (endX == startX)) {
-                if(a == null && b == null) { return true; }
+            Piece b = board.getPiece(endX, endY+1);
+            if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
+                if (a == null && b == null) { return true; }
             }
         }
         return false;
-=======
-    // add en passant later
-    Piece a = board.getPiece(endX, endY);
-    if (isWhite()) {
-        // move up one
-        if ((endY == startY-1) && (endX == startX)) {
-            if (a == null) { return true; }
-        }
-        // move up two
-        Piece b = board.getPiece(endX, endY-1);
-        if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
-            if (a == null && b == null) { return true; }
-        }
-        // need to check captures
-    }
-    // black Piece
-    else {
-        if ((endY == startY+1)  && (endX == startX)) {
-            if (a == null) {return true;}
-        }
-        Piece b = board.getPiece(endX, endY+1);
-        if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
-            if (a == null && b == null) { return true; }
-        }
-    }
-    return false;
->>>>>>> refs/remotes/origin/main
+
     }
 }
 

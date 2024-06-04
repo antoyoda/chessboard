@@ -10,6 +10,26 @@ public class Game {
     // nothing needed, could maybe switch start to static
   }
 
+    // returns [-1] if the chessNotation does not exist
+  public static int[] chessNotationToArray(String chessNotation) {
+    int[] arrayNotation = {-1, -1};
+    chessNotation = chessNotation.trim().toLowerCase();
+    if (chessNotation.length() != 2) {
+      return arrayNotation;
+    }
+    int col = chessNotation.charAt(0) - 'a';
+    int row = chessNotation.charAt(1) - '0';
+    if (col > 7 || col < 0) {
+      return arrayNotation;
+    }
+    if (row > 8 || row < 1) {
+      return arrayNotation;
+    }
+    arrayNotation[0] = col;
+    arrayNotation[1] = row-1;
+    return arrayNotation;
+  }
+
   // initializes player names
   private void getPlayerNames() {
     Scanner in = new Scanner(System.in);
@@ -44,7 +64,7 @@ public class Game {
     getPlayerNames();
     activePlayer = white;
 
-<<<<<<< HEAD
+
     System.out.println("Game started between " + white.getName() + " and "+ black.getName());
 
    /* while (!isGameOver()) {
@@ -52,7 +72,7 @@ public class Game {
       //getMove();
       switchTurn();
     }
-*/
+  */
     System.out.println("The game is over!");
   }
 
@@ -71,33 +91,8 @@ public class Game {
 
       return false;
   }
-=======
-    System.out.println("Game started between " + white.getName() + " and " + black.getName());
 
-    // while (!isGameOver()) {
-    //   System.out.println(board);
-    //   // getMove();
-    //   switchTurn();
-    // }
-
-    System.out.println("The game is over!");
-  }
-
-  // private boolean isGameOver() {
-  //   // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
-  //
-  // }
-  //
-  // private boolean isCheckMate() {
-  //
-  // }
-  //
-  // private boolean isStaleMate() {
-  //
-  // }
->>>>>>> refs/remotes/origin/main
-
-  // gets valid chess notation move and makes sure it can be played
+    // gets valid chess notation move and makes sure it can be played
   private void getMove(boolean isWhite) {
     // Scanner in = new Scanner(System.in);
     // // print: name, it's your move.
@@ -113,27 +108,29 @@ public class Game {
     // input where you want to move piece
     // check if it's possible to move there
   }
-  // returns [-1] if the chessNotation does not exist
-  public static int[] chessNotationToArray(String chessNotation) {
-    int[] arrayNotation = {-1, -1};
-    chessNotation = chessNotation.trim().toLowerCase();
-    if (chessNotation.length() != 2) {
-      return arrayNotation;
-    }
-    int col = chessNotation.charAt(0) - 'a';
-    int row = chessNotation.charAt(1) - '0';
-    if (col > 7 || col < 0) {
-      return arrayNotation;
-    }
-    if (row > 8 || row < 1) {
-      return arrayNotation;
-    }
-    arrayNotation[0] = col;
-    arrayNotation[1] = row-1;
-    return arrayNotation;
-  }
 
   private void switchTurn() {
     activePlayer = (activePlayer == white) ? black : white;
   }
+
+
+  // while (!isGameOver()) {
+  //   System.out.println(board);
+  //   // getMove();
+  //   switchTurn();
+  // }
+
+// private boolean isGameOver() {
+//   // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
+//
+// }
+//
+// private boolean isCheckMate() {
+//
+// }
+//
+// private boolean isStaleMate() {
+//
+// }
+
 }
