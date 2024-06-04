@@ -14,7 +14,7 @@ public class Piece {
 
     public String toString() {return "X";}
 
-    public boolean isLegalMove() {
+    public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
       return false;
     }
 }
@@ -27,6 +27,7 @@ class Pawn extends Piece {
     public String toString() {return "P";}
 
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
+<<<<<<< HEAD
         // add en passant later
         Piece a = board.getPiece(endX, endY);
         if (isWhite()) {
@@ -48,9 +49,34 @@ class Pawn extends Piece {
             }
         }
         return false;
+=======
+    // add en passant later
+    Piece a = board.getPiece(endX, endY);
+    if (isWhite()) {
+        // move up one
+        if ((endY == startY-1) && (endX == startX)) {
+            if (a == null) { return true; }
+        }
+        // move up two
+        Piece b = board.getPiece(endX, endY-1);
+        if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
+            if (a == null && b == null) { return true; }
+        }
+        // need to check captures
     }
-    // public void convertToQueen();
-    // add more later
+    // black Piece
+    else {
+        if ((endY == startY+1)  && (endX == startX)) {
+            if (a == null) {return true;}
+        }
+        Piece b = board.getPiece(endX, endY+1);
+        if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
+            if (a == null && b == null) { return true; }
+        }
+    }
+    return false;
+>>>>>>> refs/remotes/origin/main
+    }
 }
 
 class Rook extends Piece {
