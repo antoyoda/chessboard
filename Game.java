@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.io.*;
 import java.util.Arrays;
 
 public class Game {
@@ -31,6 +31,8 @@ public class Game {
     return arrayNotation;
   }
 
+  public Board getBoard() { return board; }
+
   public void start() {
     getPlayerNames();
     activePlayer = white;
@@ -48,13 +50,19 @@ public class Game {
 
   // initializes player names
   public void getPlayerNames() {
-    Scanner in = new Scanner(System.in);
+    // open console to readline-- used in favor of Scanner due to errors after closing input
+    Console cnsl = System.console();
+
+    if (cnsl == null) {
+        System.out.println("No console available");
+        return;
+    }
+
     System.out.print("Welcome, Player 1. You are playing with the white pieces. ");
     String name1 = "";
     // check to make sure name isn't empty
-    while (name1.trim().isEmpty()) {
-      System.out.println("What is your name?");
-      name1 = in.nextLine().trim();
+    while (name1.isEmpty()) {
+      name1 = cnsl.readLine("What is your name?\n").trim();
       if (name1.isEmpty()) {
         System.out.println("Your name can't be empty, try again.");
       }
@@ -62,9 +70,8 @@ public class Game {
 
     System.out.print("Welcome, Player 2. You are playing with the black pieces. ");
     String name2 = "";
-    while (name2.trim().isEmpty()) {
-      System.out.println("What is your name?");
-      name2 = in.nextLine().trim();
+    while (name2.isEmpty()) {
+      name2 = cnsl.readLine("What is your name?\n").trim();
       if (name2.isEmpty()) {
         System.out.println("Your name can't be empty, try again.");
       }
@@ -72,8 +79,6 @@ public class Game {
 
     white = new Player(name1, true);
     black = new Player(name2, false);
-
-    in.close();
   }
 
   // for testing purposes
@@ -83,22 +88,25 @@ public class Game {
 
   // gets valid chess notation move and makes sure it can be played
   public void getMove() {
-    Scanner in = new Scanner(System.in);
+    Console cnsl = System.console();
+
+    if (cnsl == null) {
+        System.out.println("No console available");
+        return;
+    }
+
     String c = "black";
     if (activePlayer.isWhite()) {
       c = "white";
     }
-    System.out.println(activePlayer.getName() + ", you are playing with the " + c + "pieces, it is your move.");
+    System.out.println(activePlayer.getName() + ", you are playing with the " + c + " pieces, it is your move.");
     String input1 = "";
     boolean isGoodInput = false;
     int[] arrayNotation1 = new int[2];
     int[] arrayNotation2 = new int[2];
 
     while (!isGoodInput) {
-      System.out.println("Enter the piece you want to move (use chess notation).");
-      if (in.hasNextLine()) {
-        input1 = in.nextLine();
-      }
+      input1 = cnsl.readLine("Enter the piece you want to move (use chess notation).\n").trim();
       arrayNotation1 = Game.convertChessNotationToArray(input1);
       // check notation
       if (Arrays.equals(arrayNotation1, new int[] {-1, -1})) {
@@ -119,10 +127,7 @@ public class Game {
       String input2 = "";
       boolean isGoodSecondaryInput = false;
       while (!isGoodSecondaryInput) {
-        System.out.println("Enter where you want to move the piece (use chess notation).");
-        if (in.hasNextLine()) {
-          input2 = in.nextLine();
-        }
+        input2 = cnsl.readLine("Enter where you want to move the piece (use chess notation).\n").trim();
         arrayNotation2 = Game.convertChessNotationToArray(input2);
         // check notation
         if (Arrays.equals(arrayNotation2, new int[] {-1, -1})) {
@@ -141,7 +146,6 @@ public class Game {
         }
       }
     }
-    in.close();
   }
 
   private boolean isGameOver() {
