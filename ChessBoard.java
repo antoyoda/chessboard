@@ -2,6 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
 
+
 public class ChessBoard {
   private int x;
   private int y;
@@ -17,7 +18,7 @@ public class ChessBoard {
 
     Color beige = new Color(234, 221, 202);
     Color black = new Color(111, 78, 55);
-    Rectangle border = new Rectangle(len-10,len-10,(len)*8+20,(len)*8+20);
+    Rectangle border = new Rectangle(len-20,len-20,(len)*8+40,(len)*8+40);
     g2.setColor(Color.BLACK);
     g2.fill(border);
     for (int i = 1; i <= 8; i++) {
@@ -35,5 +36,6 @@ public class ChessBoard {
     g2.drawLine(len,len,len*9,len);
     g2.drawLine(len,len*9,len*9,len*9);
     g2.drawLine(len*9,len,len*9,len*9);
+
   }
 }

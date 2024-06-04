@@ -44,28 +44,31 @@ public class Game {
     getPlayerNames();
     activePlayer = white;
 
-    System.out.println("Game started between " + white.getName() + " and " black.getName());
+    System.out.println("Game started between " + white.getName() + " and "+ black.getName());
 
-    while (!isGameOver()) {
+   /* while (!isGameOver()) {
       System.out.println(board);
-      getMove();
+      //getMove();
       switchTurn();
     }
-
+*/
     System.out.println("The game is over!");
   }
 
   private boolean isGameOver() {
     // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
 
+      return false;
   }
 
   private boolean isCheckMate() {
 
+      return false;
   }
 
   private boolean isStaleMate() {
 
+      return false;
   }
 
   // gets valid chess notation move and makes sure it can be played

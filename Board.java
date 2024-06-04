@@ -69,6 +69,9 @@ public class Board {
       output += "  a b c d e f g h";
       return output;
     }
+    public Piece getPiece(int x, int y){
+        return board[y][x];
+    }
     // // no numbers
     // public String toString() {
     //   String output = "";
