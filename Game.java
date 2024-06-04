@@ -44,7 +44,6 @@ public class Game {
     getPlayerNames();
     activePlayer = white;
 
-<<<<<<< HEAD
     System.out.println("Game started between " + white.getName() + " and "+ black.getName());
 
    /* while (!isGameOver()) {
@@ -71,32 +70,7 @@ public class Game {
 
       return false;
   }
-=======
-    System.out.println("Game started between " + white.getName() + " and " + black.getName());
-
-    // while (!isGameOver()) {
-    //   System.out.println(board);
-    //   // getMove();
-    //   switchTurn();
-    // }
-
-    System.out.println("The game is over!");
-  }
-
-  // private boolean isGameOver() {
-  //   // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
-  //
-  // }
-  //
-  // private boolean isCheckMate() {
-  //
-  // }
-  //
-  // private boolean isStaleMate() {
-  //
-  // }
->>>>>>> refs/remotes/origin/main
-
+  
   // gets valid chess notation move and makes sure it can be played
   private void getMove(boolean isWhite) {
     // Scanner in = new Scanner(System.in);
