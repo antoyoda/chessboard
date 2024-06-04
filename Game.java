@@ -70,7 +70,7 @@ public class Game {
 
       return false;
   }
-  
+
   // gets valid chess notation move and makes sure it can be played
   private void getMove(boolean isWhite) {
     // Scanner in = new Scanner(System.in);
@@ -88,7 +88,7 @@ public class Game {
     // check if it's possible to move there
   }
   // returns [-1] if the chessNotation does not exist
-  public static int[] chessNotationToArray(String chessNotation) {
+  public static int[] convertChessNotationToArray(String chessNotation) {
     int[] arrayNotation = {-1, -1};
     chessNotation = chessNotation.trim().toLowerCase();
     if (chessNotation.length() != 2) {
@@ -103,7 +103,7 @@ public class Game {
       return arrayNotation;
     }
     arrayNotation[0] = col;
-    arrayNotation[1] = row-1;
+    arrayNotation[1] = 8 - row;
     return arrayNotation;
   }
 
