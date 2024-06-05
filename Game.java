@@ -37,14 +37,14 @@ public class Game {
     getPlayerNames();
     activePlayer = white;
 
-    System.out.println("Game started between " + white.getName() + " and "+ black.getName());
+    System.out.println("Game started between " + white.getName() + " and " + black.getName());
 
-   /* while (!isGameOver()) {
-      System.out.println(board);
-      //getMove();
-      switchTurn();
-    }
-*/
+    // while (!isGameOver()) {
+    //   System.out.println(board);
+    //   //getMove();
+    //   switchTurn();
+    // }
+
     System.out.println("The game is over!");
   }
 
@@ -57,7 +57,7 @@ public class Game {
         System.out.println("No console available");
         return;
     }
-
+    // add helper function
     System.out.print("Welcome, Player 1. You are playing with the white pieces. ");
     String name1 = "";
     // check to make sure name isn't empty
