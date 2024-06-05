@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 public class Piece {
     private boolean isWhite;
 
@@ -10,7 +12,6 @@ public class Piece {
     }
 
     public boolean isWhite() { return isWhite; }
-    // public moveTo() {}
 
     public String toString() {return "X";}
 
@@ -26,36 +27,98 @@ class Pawn extends Piece {
 
     public String toString() {return "P";}
 
+    // public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
+    //     // add en passant later
+    //     Piece a = board.getPiece(endX, endY);
+    //     if (isWhite()) {
+    //         // move up one
+    //         if ((endY == startY-1) && (endX == startX)) {
+    //             if (a == null) { return true; }
+    //         }
+    //         // move up two
+    //         Piece b = board.getPiece(endX, endY-1);
+    //         if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
+    //             if (a == null && b == null) { return true; }
+    //         }
+    //         // need to check captures
+    //     }
+    //     // black Piece
+    //     else {
+    //         // move down one
+    //         if ((endY == startY+1)  && (endX == startX)) {
+    //             if (a == null) {return true;}
+    //         }
+    //         // move down two
+    //         Piece b = board.getPiece(endX, endY+1);
+    //         if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
+    //             if (a == null && b == null) { return true; }
+    //         }
+    //     }
+    //     return false;
+    //     }
+    // }
+
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
         // add en passant later
-        Piece a = board.getPiece(endX, endY);
+        // System.out.println("startX: " + startX); // 4
+        // System.out.println("startY: " + startY); // 6
+        // System.out.println("endX: " + endX); // 4
+        // System.out.println("endY: " + endY); // 2
+        // can move pieces up infiately
         if (isWhite()) {
-            // move up one
-            if ((endY == startY-1) && (endX == startX)) {
-                if (a == null) { return true; }
+            if (endY > startY) { // if same row/backwards
+              return false;
             }
-            // move up two
-            Piece b = board.getPiece(endX, endY-1);
-            if ((startX == 6) && (endY == startY-2) && (endX == startX)) {
-                if (a == null && b == null) { return true; }
+            if (Math.abs(endX - startX) > 1) { // if moving to the side by two or more
+              return false;
             }
-            // need to check captures
+            if (startX == endX) { // if same column
+              if (startY != 6 && startY - endY > 1) { // if not row 2 and moves more than 1
+                return false;
+              }
+              Piece up1 = board.getPiece(startX, startY - 1);
+              if (startY == 6) { // if row 2
+                if (startY - endY > 2) { // AND moves more than 2
+                  return false;
+                }
+                else if (endX - startX == 2) { // AND only moving 2
+                  // check piece up and piece up + 1
+                  Piece up2 = board.getPiece(startX, startY - 2);
+                  if (up1 == null && up2 == null) {
+                    return true; // if nothing there = return true
+                  }
+                  else {
+                    return false;
+                  }
+                }
+              }
+              if (up1 == null) { // check piece infront
+                return true; // nothing there = return true
+              }
+              else {
+                return false;
+              }
+            }
+            if (Math.abs(endX - startX) == 1) { // if col to the right or left
+              if ((endY - startY) > 1) { // if moves more than 1
+                return false;
+              }
+              Piece diagonal = board.getPiece(endX, endY);
+              // check piece diagonal
+              if (diagonal == null) { // if not there
+                return false;
+              }
+              if (diagonal.isWhite()) { // if same color
+                return false;
+              }
+              return true;
+            }
         }
         // black Piece
-        else {
-            // move down one
-            if ((endY == startY+1)  && (endX == startX)) {
-                if (a == null) {return true;}
-            }
-            // move down two
-            Piece b = board.getPiece(endX, endY+1);
-            if ((startX == 1) && (endY == startY+2) && (endX == startX)) {
-                if (a == null && b == null) { return true; }
-            }
-        }
+        else {}
         return false;
-        }
     }
+}
 
 class Rook extends Piece {
     public boolean hasMoved;
@@ -69,12 +132,12 @@ class Rook extends Piece {
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
         if (endX == startX){
             if (endY>startY){
-                for(int i = endY; i>startY; i--){
+                for(int i = endY; i>startY; i--) {
                     if(!(board.getPiece(startX, i) == null)){ return false; }
                 }
             }
             else {
-                for(int i = startY; i>=endY; i--){
+                for(int i = startY; i>=endY; i--) {
                     if(!(board.getPiece(startX, i) == null)){ return false; }
                 }
             }
@@ -82,7 +145,7 @@ class Rook extends Piece {
         else if (endY == startY){
             if (endX>startX){
                 for(int i = endX; i>startX; i--){
-                    if(!(board.getPiece(i,startY) == null)){
+                    if(!(board.getPiece(i,startY) == null)) {
                         return false;
                     }
                 }

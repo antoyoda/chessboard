@@ -6,3 +6,6 @@
 
 # idea source code environment
 .idea/
+
+# compiled classes
+out/
