@@ -59,12 +59,7 @@ class Pawn extends Piece {
     // }
 
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
-        // add en passant later
-        // System.out.println("startX: " + startX); // 4
-        // System.out.println("startY: " + startY); // 6
-        // System.out.println("endX: " + endX); // 4
-        // System.out.println("endY: " + endY); // 2
-        // can move pieces up infiately
+        // add en passant later -- has moved that expires after one move
         if (isWhite()) {
             if (endY > startY) { // if same row/backwards
               return false;
@@ -114,8 +109,55 @@ class Pawn extends Piece {
               return true;
             }
         }
-        // black Piece
-        else {}
+        else {
+          if (endY < startY) { // if same row/backwards
+            return false;
+          }
+          if (Math.abs(endX - startX) > 1) { // if moving to the side by two or more
+            return false;
+          }
+          if (startX == endX) { // if same column
+            if (startY != 1 && endY - startY > 1) { // if not row 2 and moves more than 1
+              return false;
+            }
+            Piece up1 = board.getPiece(startX, startY + 1);
+            if (startY == 1) { // if row 2
+              if (endY - startY > 2) { // AND moves more than 2
+                return false;
+              }
+              else if (endX - startX == 2) { // AND only moving 2
+                // check piece up and piece up + 1
+                Piece up2 = board.getPiece(startX, startY + 2);
+                if (up1 == null && up2 == null) {
+                  return true; // if nothing there = return true
+                }
+                else {
+                  return false;
+                }
+              }
+            }
+            if (up1 == null) { // check piece infront
+              return true; // nothing there = return true
+            }
+            else {
+              return false;
+            }
+          }
+          if (Math.abs(endX - startX) == 1) { // if col to the right or left
+            if ((startY - endY) > 1) { // if moves more than 1
+              return false;
+            }
+            Piece diagonal = board.getPiece(endX, endY);
+            // check piece diagonal
+            if (diagonal == null) { // if not there
+              return false;
+            }
+            if (!diagonal.isWhite()) { // if same color
+              return false;
+            }
+            return true;
+          }
+        }
         return false;
     }
 }
