@@ -130,33 +130,49 @@ class Rook extends Piece {
 
     @Override
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+        System.out.print("startX: " + startX + "endX" + endX); //0 0
+        System.out.print("startY: " + startY + "endY" + endY);// 7 5
+        if (board.getPiece(endX, endY) != null){
+            if (board.getPiece(endX, endY).isWhite() == isWhite()){
+                return false;
+            }
+        }
         if (endX == startX){
+            System.out.print(startY + "" + endY+ " ");
             if (endY>startY){
-                for(int i = endY; i>startY; i--) {
+                System.out.print("--");
+                for(int i = endY -1; i>startY; i--) {
                     if(!(board.getPiece(startX, i) == null)){ return false; }
                 }
             }
-            else {
-                for(int i = startY; i>=endY; i--) {
-                    if(!(board.getPiece(startX, i) == null)){ return false; }
+            else if (endY<startY) {
+                System.out.print(endY + "" + startY+ " ");
+                for(int i = startY -1; i>endY; i--) {
+                    if(!(board.getPiece(startX, i) == null)){
+                        return false;
+                    }
                 }
             }
         }
         else if (endY == startY){
             if (endX>startX){
-                for(int i = endX; i>startX; i--){
+                for(int i = endX -1; i>startX; i--){
                     if(!(board.getPiece(i,startY) == null)) {
                         return false;
                     }
                 }
             }
-            else {
-                for(int i = startX; i<=endX; i--) {
+            else if (endX<startX) {
+                for(int i = startX +1; i<endX; i--) {
                     if (!(board.getPiece(i, startY) == null)) {
                         return false;
                     }
                 }
             }
+        }
+        else {
+
+            return false;
         }
         return true;
     }
