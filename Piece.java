@@ -145,7 +145,7 @@ class Rook extends Piece {
                 return false;
             }
         }
-        if (endX == startX {
+        if (endX == startX) {
             if (endY > startY) {
                 for(int i = endY-1; i > startY; i--) {
                     if(!(board.getPiece(startX, i) == null)) {
