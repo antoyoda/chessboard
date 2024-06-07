@@ -139,7 +139,6 @@ class Rook extends Piece {
         this.hasMoved = hasMoved;
     }
 
-    @Override
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
         if (endX == startX){
             if (endY>startY){
@@ -187,7 +186,7 @@ class Bishop extends Piece {
         super(isWhite);
     }
     public String toString() {return "B";}
-    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+   /* public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
         System.out.print("startX: " + startX + "startY: " + startY);
         if ((startY-endY)/(startX-endX) == 1){
             if (endX>startX){
@@ -225,7 +224,7 @@ class Bishop extends Piece {
             return false;
         }
         return true;
-    }
+    } */
 }
 class Queen extends Piece {
     public Queen(boolean isWhite) {
