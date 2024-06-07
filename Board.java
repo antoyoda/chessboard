@@ -47,6 +47,16 @@ public class Board {
       board[endY][endX].moved();
     }
 
+    public boolean isSquareInCheck(int xPos, int yPos) {
+      // find king position -- (private vars if we want in this class)
+      // loop through board
+      // if square is not null
+      // AND if not the same color
+      // use isLegalMove(this, pieceX, pieceY, kingX, kingY)
+      // if any are true, return true
+      return false;
+    }
+
     public String toString() {
       String output = "";
       for (int i = 0; i < length; i++) {
