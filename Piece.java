@@ -269,10 +269,19 @@ class Bishop extends Piece {
   }
 }
 class Queen extends Piece {
+    private Piece rookDelegate;
+    private Piece bishopDelegate;
+
     public Queen(boolean isWhite) {
         super(isWhite);
+        rookDelegate = new Rook(isWhite(), true);
+        bishopDelegate = new Bishop(isWhite());
     }
     public String toString() {return "Q";}
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      return rookDelegate.isLegalMove(board, startX, startY, endX, endY) || bishopDelegate.isLegalMove(board, startX, startY, endX, endY);
+    }
 }
 class King extends Piece {
     private boolean hasMoved;
