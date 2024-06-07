@@ -193,7 +193,7 @@ class Knight extends Piece {
     public String toString() {return "N";}
 }
 class Bishop extends Piece {
-    // not done
+    // not done     
     public Bishop(boolean isWhite) {
         super(isWhite);
     }

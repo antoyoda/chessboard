@@ -164,7 +164,7 @@ public class Game {
       return false;
   }
 
-  private void switchTurn() {
+  public void switchTurn() {
     activePlayer = (activePlayer == white) ? black : white;
   }
 }
