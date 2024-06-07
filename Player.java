@@ -10,7 +10,7 @@ public class Player {
   public String getName() { return name; }
   public boolean isWhite() { return isWhite; }
 
-  private String toString() {
+  public String toString() {
     return "name: " + name + ", isWhite: " + isWhite;
   }
 }
