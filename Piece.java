@@ -194,6 +194,7 @@ class Knight extends Piece {
     public String toString() {return "N";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      // check if same color
       Piece end = board.getPiece(endX, endY);
       if (end != null) {
         if (isWhite() == end.isWhite()) {
@@ -219,45 +220,56 @@ class Bishop extends Piece {
         super(isWhite);
     }
     public String toString() {return "B";}
-   /* public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-        System.out.print("startX: " + startX + "startY: " + startY);
-        if ((startY-endY)/(startX-endX) == 1){
-            if (endX>startX){
-                for(int i = startX, int j = startY; i<=endX, j<= endY; i++, j++){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-            else {
-                for(int i = startX, int j = startY; i>=endX, j>= endY; i--, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      System.out.print("startX: " + startX + "startY: " + startY);
+      System.out.print("endX: " + endX + "endY: " + endY);
+
+      // check if same color
+      Piece end = board.getPiece(endX, endY);
+      if (end != null) {
+        if (isWhite() == end.isWhite()) {
+          return false;
         }
-        else if ((startY-endY)/(startX-endX) == -1){
-            if (endX>startX){
-                for(int i = startX, int j = startY; i<=endX, j>= endY; i++, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-            else {
-                for(int i = startX, int j = startY; i>=endX, j<= endY; i++, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            return false;
-        }
-        return true;
-    } */
+      }
+
+      if ((startY - endY) / (startX - endX) == 1) {
+          if (endX > startX){
+              for (int i = startX + 1, j = startY + 1; i < endX && j < endY; i++, j++) {
+                  if (board.getPiece(i, j) != null){
+                      return false;
+                  }
+              }
+          }
+          else {
+              for (int i = startX - 1, j = startY - 1; i > endX && j > endY; i--, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+      }
+      else if ((startY - endY) / (startX - endX) == -1) {
+          if (endX > startX){
+              for (int i = startX + 1, j = startY - 1; i < endX && j > endY; i++, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+          else {
+              for (int i = startX - 1, j = startY + 1; i > endX && j < endY; i++, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+      }
+      else {
+          return false;
+      }
+      return true;
+  }
 }
 class Queen extends Piece {
     public Queen(boolean isWhite) {
