@@ -192,6 +192,8 @@ class Knight extends Piece {
         super(isWhite);
     }
     public String toString() {return "N";}
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
 }
 class Bishop extends Piece {
     public Bishop(boolean isWhite) {
