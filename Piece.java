@@ -226,7 +226,7 @@ class Bishop extends Piece {
         }
         return true;
     }
-}
+} 
 class Queen extends Piece {
     public Queen(boolean isWhite) {
         super(isWhite);
