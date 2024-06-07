@@ -187,6 +187,45 @@ class Bishop extends Piece {
         super(isWhite);
     }
     public String toString() {return "B";}
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+        System.out.print("startX: " + startX + "startY: " + startY);
+        if ((startY-endY)/(startX-endX) == 1){
+            if (endX>startX){
+                for(int i = startX, int j = startY; i<=endX, j<= endY; i++, j++){
+                    if(board.getPiece(i,j) != null){
+                        return false;
+                    }
+                }
+            }
+            else {
+                for(int i = startX, int j = startY; i>=endX, j>= endY; i--, j--){
+                    if(board.getPiece(i,j) != null){
+                        return false;
+                    }
+                }
+            }
+        }
+        else if ((startY-endY)/(startX-endX) == -1){
+            if (endX>startX){
+                for(int i = startX, int j = startY; i<=endX, j>= endY; i++, j--){
+                    if(board.getPiece(i,j) != null){
+                        return false;
+                    }
+                }
+            }
+            else {
+                for(int i = startX, int j = startY; i>=endX, j<= endY; i++, j--){
+                    if(board.getPiece(i,j) != null){
+                        return false;
+                    }
+                }
+            }
+        }
+        else {
+            return false;
+        }
+        return true;
+    }
 }
 class Queen extends Piece {
     public Queen(boolean isWhite) {
