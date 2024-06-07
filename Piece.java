@@ -194,7 +194,26 @@ class Knight extends Piece {
     public String toString() {return "N";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-}
+      Piece end = board.getPiece(endX, endY);
+      if (end != null) {
+        if (isWhite() == end.isWhite()) {
+          return false;
+        }
+      }
+      if (Math.abs(startX-endX) == 2) {
+        if (Math.abs(startY-endY) == 1) {
+          return true;
+        }
+      }
+      else if (Math.abs(startY-endY) == 2) {
+        if (Math.abs(startX-endX) == 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
 class Bishop extends Piece {
     public Bishop(boolean isWhite) {
         super(isWhite);
