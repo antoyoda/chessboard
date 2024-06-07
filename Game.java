@@ -33,6 +33,8 @@ public class Game {
 
   public Board getBoard() { return board; }
 
+  public Player getActivePlayer() { return activePlayer; }
+
   public void start() {
     getPlayerNames();
     activePlayer = white;
@@ -165,6 +167,6 @@ public class Game {
   }
 
   public void switchTurn() {
-    activePlayer = (activePlayer == white) ? black : white;
+    activePlayer = (activePlayer.isWhite()) ? black : white;
   }
 }
