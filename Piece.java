@@ -222,9 +222,6 @@ class Bishop extends Piece {
     public String toString() {return "B";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-      System.out.print("startX: " + startX + "startY: " + startY);
-      System.out.print("endX: " + endX + "endY: " + endY);
-
       // check if same color
       Piece end = board.getPiece(endX, endY);
       if (end != null) {
