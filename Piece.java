@@ -18,6 +18,10 @@ public class Piece {
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
       return false;
     }
+
+    public void moved() {
+      return;
+    }
 }
 
 class Pawn extends Piece {
@@ -183,6 +187,10 @@ class Rook extends Piece {
         return true;
     }
 
+    public void moved() {
+      hasMoved == true;
+    }
+
     public boolean hasMoved() { return hasMoved; }
     public String toString() {return "R";}
 }
@@ -292,5 +300,10 @@ class King extends Piece {
     public King(boolean isWhite) {
         super(isWhite);
     }
+
+    public void moved() {
+      hasMoved == true;
+    }
+
     public String toString() {return "K";}
 }

@@ -44,6 +44,7 @@ public class Board {
       }
       board[endY][endX] = board[startY][startX];
       board[startY][startX] = null;
+      board[endY][endX].moved();
     }
 
     public String toString() {
