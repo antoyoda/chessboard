@@ -47,13 +47,21 @@ public class Board {
       board[endY][endX].moved();
     }
 
-    public boolean isSquareInCheck(int xPos, int yPos) {
-      // find king position -- (private vars if we want in this class)
-      // loop through board
-      // if square is not null
-      // AND if not the same color
-      // use isLegalMove(this, pieceX, pieceY, kingX, kingY)
-      // if any are true, return true
+    public boolean isSquareInCheck(int xPos, int yPos, boolean whiteSquare) {
+      for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8; col++) {
+          Piece p = board[row][col]; // loop through each piece
+          if (p != null) { // if not null
+            if (whiteSquare != p.isWhite()) { // AND different color
+              if (p.getClass() != King.class) { // AND not king
+                if (p.isLegalMove(this, col, row, xPos, yPos)) { // AND can attack that square
+                  return true;
+                }
+              }
+            }
+          }
+        }
+      }
       return false;
     }
 

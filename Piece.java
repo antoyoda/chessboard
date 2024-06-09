@@ -68,7 +68,7 @@ class Pawn extends Piece {
               }
             }
             if (Math.abs(endX - startX) == 1) { // if col to the right or left
-              if ((endY - startY) > 1) { // if moves more than 1
+              if (Math.abs(endY - startY) > 1) { // if moves more than 1
                 return false;
               }
               Piece diagonal = board.getPiece(endX, endY);
@@ -117,7 +117,7 @@ class Pawn extends Piece {
             }
           }
           if (Math.abs(endX - startX) == 1) { // if col to the right or left
-            if ((startY - endY) > 1) { // if moves more than 1
+            if (Math.abs(startY - endY) > 1) { // if moves more than 1
               return false;
             }
             Piece diagonal = board.getPiece(endX, endY);
@@ -188,7 +188,7 @@ class Rook extends Piece {
     }
 
     public void moved() {
-      hasMoved == true;
+      hasMoved = true;
     }
 
     public boolean hasMoved() { return hasMoved; }
@@ -302,7 +302,7 @@ class King extends Piece {
     }
 
     public void moved() {
-      hasMoved == true;
+      hasMoved = true;
     }
 
     public String toString() {return "K";}
