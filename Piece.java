@@ -140,10 +140,8 @@ class Rook extends Piece {
     }
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-        System.out.print("startX: " + startX + "endX" + endX); //0 0
-        System.out.print("startY: " + startY + "endY" + endY);// 7 5
-        if (board.getPiece(endX, endY) != null){
-            if (board.getPiece(endX, endY).isWhite() == isWhite()){
+        if (board.getPiece(endX, endY) != null) {
+            if (board.getPiece(endX, endY).isWhite() == isWhite()) {
                 return false;
             }
         }
@@ -155,6 +153,16 @@ class Rook extends Piece {
             }
             else if (endY < startY) {
                 for (int i = startY-1; i > endY; i--) {
+        if (endX == startX {
+            if (endY > startY) {
+                for(int i = endY-1; i > startY; i--) {
+                    if(!(board.getPiece(startX, i) == null)) {
+                      return false;
+                    }
+                }
+            }
+            else if (endY < startY) {
+                for(int i = startY-1; i > endY; i--) {
                     if(!(board.getPiece(startX, i) == null)) {
                         return false;
                     }
@@ -165,6 +173,10 @@ class Rook extends Piece {
             if (endX > startX) {
                 for (int i = endX-1; i > startX; i--) {
                     if(!(board.getPiece(i,startY) == null)) {
+        else if (endY == startY) {
+            if (endX > startX) {
+                for (int i = endX-1; i > startX; i--) {
+                    if (!(board.getPiece(i,startY) == null)) {
                         return false;
                     }
                 }
