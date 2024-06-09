@@ -11,6 +11,10 @@ public class Piece {
         this.isWhite = isWhite;
     }
 
+    public Piece(Piece piece) {
+      isWhite = piece.isWhite();
+    }
+
     public boolean isWhite() { return isWhite; }
 
     public String toString() {return "X";}
@@ -18,11 +22,19 @@ public class Piece {
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
       return false;
     }
+
+    public void moved() {
+      return;
+    }
 }
 
 class Pawn extends Piece {
     public Pawn(boolean isWhite) {
         super(isWhite);
+    }
+
+    public Pawn(Pawn piece) {
+      super(piece);
     }
 
     public String toString() {return "P";}
@@ -64,7 +76,7 @@ class Pawn extends Piece {
               }
             }
             if (Math.abs(endX - startX) == 1) { // if col to the right or left
-              if ((endY - startY) > 1) { // if moves more than 1
+              if (Math.abs(endY - startY) > 1) { // if moves more than 1
                 return false;
               }
               Piece diagonal = board.getPiece(endX, endY);
@@ -113,7 +125,7 @@ class Pawn extends Piece {
             }
           }
           if (Math.abs(endX - startX) == 1) { // if col to the right or left
-            if ((startY - endY) > 1) { // if moves more than 1
+            if (Math.abs(startY - endY) > 1) { // if moves more than 1
               return false;
             }
             Piece diagonal = board.getPiece(endX, endY);
@@ -139,21 +151,18 @@ class Rook extends Piece {
         this.hasMoved = hasMoved;
     }
 
+    public Rook(Rook piece) {
+      super(piece);
+      hasMoved = piece.hasMoved();
+    }
+
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
         if (board.getPiece(endX, endY) != null) {
             if (board.getPiece(endX, endY).isWhite() == isWhite()) {
                 return false;
             }
         }
-        if (endX == startX){
-            if (endY > startY){
-                for (int i = endY-1; i > startY; i--) {
-                    if (!(board.getPiece(startX, i) == null)) { return false; }
-                }
-            }
-            else if (endY < startY) {
-                for (int i = startY-1; i > endY; i--) {
-        if (endX == startX {
+        if (endX == startX) {
             if (endY > startY) {
                 for(int i = endY-1; i > startY; i--) {
                     if(!(board.getPiece(startX, i) == null)) {
@@ -169,10 +178,6 @@ class Rook extends Piece {
                 }
             }
         }
-        else if (endY == startY){
-            if (endX > startX) {
-                for (int i = endX-1; i > startX; i--) {
-                    if(!(board.getPiece(i,startY) == null)) {
         else if (endY == startY) {
             if (endX > startX) {
                 for (int i = endX-1; i > startX; i--) {
@@ -195,6 +200,10 @@ class Rook extends Piece {
         return true;
     }
 
+    public void moved() {
+      hasMoved = true;
+    }
+
     public boolean hasMoved() { return hasMoved; }
     public String toString() {return "R";}
 }
@@ -203,67 +212,135 @@ class Knight extends Piece {
     public Knight(boolean isWhite) {
         super(isWhite);
     }
+
+    public Knight(Knight piece) {
+      super(piece);
+    }
+
     public String toString() {return "N";}
-}
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      // check if same color
+      Piece end = board.getPiece(endX, endY);
+      if (end != null) {
+        if (isWhite() == end.isWhite()) {
+          return false;
+        }
+      }
+      if (Math.abs(startX-endX) == 2) {
+        if (Math.abs(startY-endY) == 1) {
+          return true;
+        }
+      }
+      else if (Math.abs(startY-endY) == 2) {
+        if (Math.abs(startX-endX) == 1) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
 class Bishop extends Piece {
     public Bishop(boolean isWhite) {
         super(isWhite);
     }
+
+    public Bishop(Bishop piece) {
+      super(piece);
+    }
+
     public String toString() {return "B";}
-   /* public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-        System.out.print("startX: " + startX + "startY: " + startY);
-        if ((startY-endY)/(startX-endX) == 1){
-            if (endX>startX){
-                for(int i = startX, int j = startY; i<=endX, j<= endY; i++, j++){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-            else {
-                for(int i = startX, int j = startY; i>=endX, j>= endY; i--, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      // check if same color
+      Piece end = board.getPiece(endX, endY);
+      if (end != null) {
+        if (isWhite() == end.isWhite()) {
+          return false;
         }
-        else if ((startY-endY)/(startX-endX) == -1){
-            if (endX>startX){
-                for(int i = startX, int j = startY; i<=endX, j>= endY; i++, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-            else {
-                for(int i = startX, int j = startY; i>=endX, j<= endY; i++, j--){
-                    if(board.getPiece(i,j) != null){
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            return false;
-        }
-        return true;
-    } */
+      }
+
+      if ((startY - endY) / (startX - endX) == 1) {
+          if (endX > startX){
+              for (int i = startX + 1, j = startY + 1; i < endX && j < endY; i++, j++) {
+                  if (board.getPiece(i, j) != null){
+                      return false;
+                  }
+              }
+          }
+          else {
+              for (int i = startX - 1, j = startY - 1; i > endX && j > endY; i--, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+      }
+      else if ((startY - endY) / (startX - endX) == -1) {
+          if (endX > startX){
+              for (int i = startX + 1, j = startY - 1; i < endX && j > endY; i++, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+          else {
+              for (int i = startX - 1, j = startY + 1; i > endX && j < endY; i++, j--) {
+                  if (board.getPiece(i, j) != null) {
+                      return false;
+                  }
+              }
+          }
+      }
+      else {
+          return false;
+      }
+      return true;
+  }
 }
 class Queen extends Piece {
+    private Piece rookDelegate;
+    private Piece bishopDelegate;
+
     public Queen(boolean isWhite) {
         super(isWhite);
+        rookDelegate = new Rook(isWhite(), true);
+        bishopDelegate = new Bishop(isWhite());
     }
+
+    public Queen(Queen piece) {
+      super(piece);
+      rookDelegate = new Rook(isWhite(), true);
+      bishopDelegate = new Bishop(isWhite());
+    }
+
     public String toString() {return "Q";}
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      return rookDelegate.isLegalMove(board, startX, startY, endX, endY) || bishopDelegate.isLegalMove(board, startX, startY, endX, endY);
+    }
 }
 class King extends Piece {
     private boolean hasMoved;
 
-    // public boolean canCastleKingside() {}
-    // public boolean canCastleQueenside() {}
-
     public King(boolean isWhite) {
         super(isWhite);
     }
+
+    public King(King piece) {
+      super(piece);
+      hasMoved = piece.hasMoved();
+    }
+
+    // public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {}
+    // public boolean canCastleKingside() {}
+    // public boolean canCastleQueenside() {}
+
+    public void moved() {
+      hasMoved = true;
+    }
+
+    public boolean hasMoved() { return hasMoved; }
     public String toString() {return "K";}
 }

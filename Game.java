@@ -1,4 +1,4 @@
-import java.io.*; 
+import java.io.*;
 import java.util.Arrays;
 
 public class Game {
@@ -156,9 +156,14 @@ public class Game {
       return false;
   }
 
-  private boolean isCheckMate() {
+  private boolean isCheckMate(boolean checkWhite) {
+    // find King
+    // if NOT in check
+      // return false
+    // for each square surrounding
+      // move King there - clone board - Board clone = new Board(board));
 
-      return false;
+    return false;
   }
 
   private boolean isStaleMate() {
