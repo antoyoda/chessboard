@@ -33,6 +33,37 @@ public class Board {
         board[7][4] = new King(true);
     }
 
+    public Board(Board board) {
+      Piece[][] board = getBoard();
+      for (int row = 0; row < length; row++) {
+        for (int col = 0; col < length; col++) {
+          Piece p = board[row][col];
+          if (p != null) {
+            if (board[row][col].getClass() == Pawn.class) {
+              this.board[row][col] = new Pawn(board[row][col]);
+            }
+            else if (board[row][col].getClass() == Rook.class) {
+              this.board[row][col] = new Rook(board[row][col]);
+            }
+            else if (board[row][col].getClass() == Knight.class) {
+              this.board[row][col] = new Knight(board[row][col]);
+            }
+            else if (board[row][col].getClass() == Bishop.class) {
+              this.board[row][col] = new Bishop(board[row][col]);
+            }
+            else if (board[row][col].getClass() == Queen.class) {
+              this.board[row][col] = new Queen(board[row][col]);
+            }
+            else {
+              this.board[row][col] = new King(board[row][col]);
+            }
+          }
+        }
+      }
+    }
+
+    public Piece[][] getBoard() { return board; }
+
     public Piece getPiece(int xPos, int yPos) {
       return board[yPos][xPos];
     }

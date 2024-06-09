@@ -14,7 +14,7 @@ public class Tester {
     Board b = new Board();
     b.movePiece(1, 7, 3, 2);
     System.out.println(b);
-    System.out.println(b.isSquareInCheck(4, 0, false));
-    System.out.println(b.isSquareInCheck(4, 7, true));
+    Board clone = new Board(b);
+    System.out.println(clone);
   }
 }

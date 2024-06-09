@@ -11,6 +11,10 @@ public class Piece {
         this.isWhite = isWhite;
     }
 
+    public Piece(Piece piece) {
+      isWhite = piece.isWhite();
+    }
+
     public boolean isWhite() { return isWhite; }
 
     public String toString() {return "X";}
@@ -27,6 +31,10 @@ public class Piece {
 class Pawn extends Piece {
     public Pawn(boolean isWhite) {
         super(isWhite);
+    }
+
+    public Pawn(Pawn piece) {
+      super(piece);
     }
 
     public String toString() {return "P";}
@@ -143,6 +151,11 @@ class Rook extends Piece {
         this.hasMoved = hasMoved;
     }
 
+    public Rook(Rook piece) {
+      super(piece);
+      hasMoved = piece.hasMoved();
+    }
+
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
         if (board.getPiece(endX, endY) != null) {
             if (board.getPiece(endX, endY).isWhite() == isWhite()) {
@@ -199,6 +212,11 @@ class Knight extends Piece {
     public Knight(boolean isWhite) {
         super(isWhite);
     }
+
+    public Knight(Knight piece) {
+      super(piece);
+    }
+
     public String toString() {return "N";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
@@ -227,6 +245,11 @@ class Bishop extends Piece {
     public Bishop(boolean isWhite) {
         super(isWhite);
     }
+
+    public Bishop(Bishop piece) {
+      super(piece);
+    }
+
     public String toString() {return "B";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
@@ -285,6 +308,13 @@ class Queen extends Piece {
         rookDelegate = new Rook(isWhite(), true);
         bishopDelegate = new Bishop(isWhite());
     }
+
+    public Queen(Queen piece) {
+      super(piece);
+      rookDelegate = new Rook(isWhite(), true);
+      bishopDelegate = new Bishop(isWhite());
+    }
+
     public String toString() {return "Q";}
 
     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
@@ -294,16 +324,23 @@ class Queen extends Piece {
 class King extends Piece {
     private boolean hasMoved;
 
-    // public boolean canCastleKingside() {}
-    // public boolean canCastleQueenside() {}
-
     public King(boolean isWhite) {
         super(isWhite);
     }
+
+    public King(King piece) {
+      super(piece);
+      hasMoved = piece.hasMoved();
+    }
+
+    // public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {}
+    // public boolean canCastleKingside() {}
+    // public boolean canCastleQueenside() {}
 
     public void moved() {
       hasMoved = true;
     }
 
+    public boolean hasMoved() { return hasMoved; }
     public String toString() {return "K";}
 }
