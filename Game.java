@@ -162,6 +162,11 @@ public class Game {
       // return false
     // for each square surrounding
       // move King there - clone board - Board clone = new Board(board));
+      // check if still in check
+      // any not in check, return false
+    // find each piece checking (method findCheckingPieces)
+      // if more than 1 piece checking the king and NO LEGAL MOVES
+        // return true
 
     return false;
   }
