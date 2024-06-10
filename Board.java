@@ -33,7 +33,7 @@ public class Board {
         board[7][4] = new King(true);
     }
 
-    public Board(Board board) {
+    /*public Board(Board board) {
       Piece[][] board = getBoard();
       for (int row = 0; row < length; row++) {
         for (int col = 0; col < length; col++) {
@@ -60,7 +60,7 @@ public class Board {
           }
         }
       }
-    }
+    }*/
 
     public Piece[][] getBoard() { return board; }
 
