@@ -33,34 +33,34 @@ public class Board {
         board[7][4] = new King(true);
     }
 
-    /*public Board(Board board) {
-      Piece[][] board = getBoard();
-      for (int row = 0; row < length; row++) {
-        for (int col = 0; col < length; col++) {
-          Piece p = board[row][col];
-          if (p != null) {
-            if (board[row][col].getClass() == Pawn.class) {
-              this.board[row][col] = new Pawn(board[row][col]);
-            }
-            else if (board[row][col].getClass() == Rook.class) {
-              this.board[row][col] = new Rook(board[row][col]);
-            }
-            else if (board[row][col].getClass() == Knight.class) {
-              this.board[row][col] = new Knight(board[row][col]);
-            }
-            else if (board[row][col].getClass() == Bishop.class) {
-              this.board[row][col] = new Bishop(board[row][col]);
-            }
-            else if (board[row][col].getClass() == Queen.class) {
-              this.board[row][col] = new Queen(board[row][col]);
-            }
-            else {
-              this.board[row][col] = new King(board[row][col]);
-            }
-          }
-        }
-      }
-    }*/
+    // public Board(Board board) {
+    //   Piece[][] board = getBoard();
+    //   for (int row = 0; row < length; row++) {
+    //     for (int col = 0; col < length; col++) {
+    //       Piece p = board[row][col];
+    //       if (p != null) {
+    //         if (board[row][col].getClass() == Pawn.class) {
+    //           this.board[row][col] = new Pawn(board[row][col]);
+    //         }
+    //         else if (board[row][col].getClass() == Rook.class) {
+    //           this.board[row][col] = new Rook(board[row][col]);
+    //         }
+    //         else if (board[row][col].getClass() == Knight.class) {
+    //           this.board[row][col] = new Knight(board[row][col]);
+    //         }
+    //         else if (board[row][col].getClass() == Bishop.class) {
+    //           this.board[row][col] = new Bishop(board[row][col]);
+    //         }
+    //         else if (board[row][col].getClass() == Queen.class) {
+    //           this.board[row][col] = new Queen(board[row][col]);
+    //         }
+    //         else {
+    //           this.board[row][col] = new King(board[row][col]);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     public Piece[][] getBoard() { return board; }
 
@@ -84,6 +84,7 @@ public class Board {
           Piece p = board[row][col]; // loop through each piece
           if (p != null) { // if not null
             if (whiteSquare != p.isWhite()) { // AND different color
+              // WON'T WORK
               if (p.getClass() != King.class) { // AND not king
                 if (p.isLegalMove(this, col, row, xPos, yPos)) { // AND can attack that square
                   return true;
@@ -95,6 +96,11 @@ public class Board {
       }
       return false;
     }
+
+    // public ArrayList<int[]> findCheckingPieces(int xPos, int yPos, boolean whiteSquare) {
+    //   ArrayList<int[]> output = new ArrayList<Piece>();
+    //   return output;
+    // }
 
     public String toString() {
       String output = "";

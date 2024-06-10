@@ -1,5 +1,6 @@
 public class Tester {
   public static void main(String args[]) {
+
      Game g = new Game();
      g.getPlayerNames();
      g.assignActivePlayer();
@@ -15,5 +16,22 @@ public class Tester {
     System.out.println(b);
     //Board clone = new Board(b);
     System.out.println(b); */
+
+    Game g = new Game();
+    g.getPlayerNames();
+    g.assignActivePlayer();
+    boolean stop = false;
+    while (!stop) {
+      System.out.println(g.getBoard());
+      g.getMove();
+      // g.switchTurn();
+    }
+
+    // Board b = new Board();
+    // b.movePiece(1, 7, 3, 2);
+    // System.out.println(b);
+    // Board clone = new Board(b);
+    // System.out.println(clone);
+
   }
 }
