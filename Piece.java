@@ -26,6 +26,8 @@ public class Piece {
     public void moved() {
       return;
     }
+
+    public boolean hasMoved() { return false; }
 }
 
 class Pawn extends Piece {

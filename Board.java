@@ -33,34 +33,34 @@ public class Board {
         board[7][4] = new King(true);
     }
 
-    // public Board(Board board) {
-    //   Piece[][] board = getBoard();
-    //   for (int row = 0; row < length; row++) {
-    //     for (int col = 0; col < length; col++) {
-    //       Piece p = board[row][col];
-    //       if (p != null) {
-    //         if (board[row][col].getClass() == Pawn.class) {
-    //           this.board[row][col] = new Pawn(board[row][col]);
-    //         }
-    //         else if (board[row][col].getClass() == Rook.class) {
-    //           this.board[row][col] = new Rook(board[row][col]);
-    //         }
-    //         else if (board[row][col].getClass() == Knight.class) {
-    //           this.board[row][col] = new Knight(board[row][col]);
-    //         }
-    //         else if (board[row][col].getClass() == Bishop.class) {
-    //           this.board[row][col] = new Bishop(board[row][col]);
-    //         }
-    //         else if (board[row][col].getClass() == Queen.class) {
-    //           this.board[row][col] = new Queen(board[row][col]);
-    //         }
-    //         else {
-    //           this.board[row][col] = new King(board[row][col]);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    public Board(Board other) {
+      Piece[][] board1 = other.getBoard();
+      for (int row = 0; row < length; row++) {
+        for (int col = 0; col < length; col++) {
+          Piece p = board1[row][col];
+          if (p != null) {
+            if (board1[row][col].getClass() == Pawn.class) {
+              this.board[row][col] = new Pawn((Pawn)board1[row][col]);
+            }
+            else if (board1[row][col].getClass() == Rook.class) {
+              this.board[row][col] = new Rook((Rook)board1[row][col]);
+            }
+            else if (board1[row][col].getClass() == Knight.class) {
+              this.board[row][col] = new Knight((Knight)board1[row][col]);
+            }
+            else if (board1[row][col].getClass() == Bishop.class) {
+              this.board[row][col] = new Bishop((Bishop)board1[row][col]);
+            }
+            else if (board1[row][col].getClass() == Queen.class) {
+              this.board[row][col] = new Queen((Queen)board1[row][col]);
+            }
+            else {
+              this.board[row][col] = new King((King)board1[row][col]);
+            }
+          }
+        }
+      }
+    }
 
     public Piece[][] getBoard() { return board; }
 
