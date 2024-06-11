@@ -10,10 +10,12 @@ public class Tester {
     //   // g.switchTurn();
     // }
 
-    // Board b = new Board();
-    // b.movePiece(1, 7, 3, 2);
-    // b.movePiece(0, 7, 0, 3);
-    // System.out.println(b);
+    Board b = new Board();
+    b.movePiece(1, 7, 3, 2);
+    b.movePiece(0, 7, 0, 3);
+    System.out.println(b);
+    System.out.println(b.isSquareInCheck(4, 0, true));
+
     // System.out.println(b.getPiece(5, 6).hasMoved());
     // Board clone = new Board(b);
     // System.out.println(clone);

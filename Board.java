@@ -39,25 +39,22 @@ public class Board {
         for (int col = 0; col < length; col++) {
           Piece p = board1[row][col];
           if (p != null) {
-            if (board1[row][col].getClass() == Pawn.class) {
-              this.board[row][col] = new Pawn((Pawn)board1[row][col]);
+                if (p instanceof Pawn) {
+                    this.board[row][col] = new Pawn((Pawn) p);
+                } else if (p instanceof Rook) {
+                    this.board[row][col] = new Rook((Rook) p);
+                } else if (p instanceof Knight) {
+                    this.board[row][col] = new Knight((Knight) p);
+                } else if (p instanceof Bishop) {
+                    this.board[row][col] = new Bishop((Bishop) p);
+                } else if (p instanceof Queen) {
+                    this.board[row][col] = new Queen((Queen) p);
+                } else if (p instanceof King) {
+                    this.board[row][col] = new King((King) p);
+                } else {
+                    throw new IllegalArgumentException("Unknown piece type");
+                }
             }
-            else if (board1[row][col].getClass() == Rook.class) {
-              this.board[row][col] = new Rook((Rook)board1[row][col]);
-            }
-            else if (board1[row][col].getClass() == Knight.class) {
-              this.board[row][col] = new Knight((Knight)board1[row][col]);
-            }
-            else if (board1[row][col].getClass() == Bishop.class) {
-              this.board[row][col] = new Bishop((Bishop)board1[row][col]);
-            }
-            else if (board1[row][col].getClass() == Queen.class) {
-              this.board[row][col] = new Queen((Queen)board1[row][col]);
-            }
-            else {
-              this.board[row][col] = new King((King)board1[row][col]);
-            }
-          }
         }
       }
     }
@@ -67,6 +64,13 @@ public class Board {
     public Piece getPiece(int xPos, int yPos) {
       return board[yPos][xPos];
     }
+
+    // public Class<?> getPieceClass(int xPos, int yPos) {
+    //     if (board[yPos][xPos] == null) {
+    //         return null;
+    //     }
+    //     return board[yPos][xPos].getClass();
+    // }
 
     public void movePiece(int startX, int startY, int endX, int endY) {
       if (board[startY][startX] == null) {
@@ -85,6 +89,9 @@ public class Board {
           if (p != null) { // if not null
             if (whiteSquare != p.isWhite()) { // AND different color
               // WON'T WORK
+              if (p instanceof King) {
+                System.out.println("FOUND");
+              }
               if (p.getClass() != King.class) { // AND not king
                 if (p.isLegalMove(this, col, row, xPos, yPos)) { // AND can attack that square
                   return true;
@@ -97,8 +104,9 @@ public class Board {
       return false;
     }
 
-    // public ArrayList<int[]> findCheckingPieces(int xPos, int yPos, boolean whiteSquare) {
-    //   ArrayList<int[]> output = new ArrayList<Piece>();
+    // public ArrayList<int[]> findPosCheckingPieces(int xPos, int yPos, boolean whiteSquare) {
+    //   ArrayList<int[]> output = new ArrayList<int[]>();
+    //   for (int row = 0)
     //   return output;
     // }
 
