@@ -158,15 +158,20 @@ public class Game {
 
   private boolean isCheckMate(boolean checkWhite) {
     // find King
+    int [] cords = board.findKing(checkWhite);
+    int y = cords[0];
+    int x = cords[1];
     // if NOT in check
-      // return false
+    if (isSquareInCheck(x, y, checkWhite) != true)
+        return false;
+    // find each piece checking (method findCheckingPieces)
+    // if more than 1 piece checking the king and NO LEGAL MOVES
+    // return true
+    //          if (findCheckingPieces(x,y,checkWhite) >1 && )
     // for each square surrounding
       // move King there - clone board - Board clone = new Board(board));
       // check if still in check
       // any not in check, return false
-    // find each piece checking (method findCheckingPieces)
-      // if more than 1 piece checking the king and NO LEGAL MOVES
-        // return true
 
     return false;
   }
