@@ -289,7 +289,7 @@ class Bishop extends Piece {
           }
           else {
               for (int i = startX - 1, j = startY - 1; i < endX && j < endY; i--, j--) {
-                  if (board.getPiece(i, j) != null) {
+                  if (!(board.getPiece(i, j) == null)) {
                       return false;
                   }
               }

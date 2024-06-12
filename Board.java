@@ -109,7 +109,7 @@ public class Board {
             for (int xPos = 0; xPos < 8; xPos++) {
                 Piece a = board[yPos][xPos];
                 if (a != null){
-                    if(a.isLegalMove(b, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
+                    if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
                         count++;
                     }
                 }
@@ -131,6 +131,7 @@ public class Board {
                     }
                 }
             }
+        return result;
         }
 
 
