@@ -117,6 +117,20 @@ public class Board {
         }
         return count;
     }
+    public int[] cordsCheckingPiece(int xPosKing, int yPosKing, boolean isKingWhite){
+        for (int yPos = 0; yPos < 8; yPos++) {
+            for (int xPos = 0; xPos < 8; xPos++) {
+                Piece a = board[yPos][xPos];
+                if (a != null){
+                    if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
+                        cords[0] = xPos;
+                        cords[1] = yPos;
+                    }
+                }
+            }
+        }
+        return cords;
+    }
     public int[] findKing(boolean isWhite){
         int[] result = new int[2];
         for (int yPos = 0; yPos < 8; yPos++) {

@@ -158,16 +158,26 @@ public class Game {
 
   private boolean isCheckMate(boolean checkWhite) {
     // find King
-    int [] cords = board.findKing(checkWhite);
-    int y = cords[0];
-    int x = cords[1];
+    int [] Kingcords = board.findKing(checkWhite);
+    int y = Kingcords[0];
+    int x = Kingords[1];
     // if NOT in check
-    if (this.isSquareInCheck(x, y, checkWhite) != true)
+    if (board.isSquareInCheck(x, y, checkWhite) != true)
         return false;
     //if in check
     else {
       //if in double check
+      if (board.findCheckingPieces(x, y, checkWhite) > 1){
+        int [] cords = board.cordsCheckingPiece(x, y, checkWhite);
+        int xPos = cords[0];
+        int yPos = cords[1];
+        //check all possible king moves
+        if (xPos == 0 || xPos = 7)
+      }
+      //check possible king moves and if a piece can obstruct the checking piece
+      else {
 
+      }
     }
 
     return false;
