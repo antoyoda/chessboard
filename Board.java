@@ -103,6 +103,51 @@ public class Board {
       }
       return false;
     }
+    public int findCheckingPieces (int xPosKing, int yPosKing, boolean isKingWhite){
+        int count = 0;
+        for (int yPos = 0; yPos < 8; yPos++) {
+            for (int xPos = 0; xPos < 8; xPos++) {
+                Piece a = board[yPos][xPos];
+                if (a != null){
+                    if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    public int[] cordsCheckingPiece(int xPosKing, int yPosKing, boolean isKingWhite){
+        for (int yPos = 0; yPos < 8; yPos++) {
+            for (int xPos = 0; xPos < 8; xPos++) {
+                Piece a = board[yPos][xPos];
+                if (a != null){
+                    if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
+                        cords[0] = xPos;
+                        cords[1] = yPos;
+                    }
+                }
+            }
+        }
+        return cords;
+    }
+    public int[] findKing(boolean isWhite){
+        int[] result = new int[2];
+        for (int yPos = 0; yPos < 8; yPos++) {
+            for (int xPos = 0; xPos < 8; xPos++) {
+                Piece k = board[yPos][xPos];
+                    if (k != null) {
+                        if (k.getClass() == King.class && k.isWhite() == isWhite) {
+                            result[0] = yPos;
+                            result[1] = xPos;
+                            return result;
+                        }
+                    }
+                }
+            }
+        return result;
+        }
+
 
     // public ArrayList<int[]> findPosCheckingPieces(int xPos, int yPos, boolean whiteSquare) {
     //   ArrayList<int[]> output = new ArrayList<int[]>();
