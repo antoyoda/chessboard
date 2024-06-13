@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Board {
     private final Piece[][] board = new Piece[8][8];
     private int length = 8;
@@ -82,12 +84,12 @@ public class Board {
       board[endY][endX].moved();
     }
 
-    public boolean isSquareInCheck(int xPos, int yPos, boolean whiteSquare) {
+    public boolean isSquareInCheck(int xPos, int yPos, boolean isWhiteSquare) {
       for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8; col++) {
           Piece p = board[row][col]; // loop through each piece
           if (p != null) { // if not null
-            if (whiteSquare != p.isWhite()) { // AND different color
+            if (isWhiteSquare != p.isWhite()) { // AND different color
               // WON'T WORK
               if (p instanceof King) {
                 System.out.println("FOUND");
@@ -103,7 +105,8 @@ public class Board {
       }
       return false;
     }
-    public int findCheckingPieces (int xPosKing, int yPosKing, boolean isKingWhite){
+
+    public int findNumCheckingPieces (int xPosKing, int yPosKing, boolean isKingWhite){
         int count = 0;
         for (int yPos = 0; yPos < 8; yPos++) {
             for (int xPos = 0; xPos < 8; xPos++) {
@@ -117,43 +120,54 @@ public class Board {
         }
         return count;
     }
-    public int[] cordsCheckingPiece(int xPosKing, int yPosKing, boolean isKingWhite){
-        for (int yPos = 0; yPos < 8; yPos++) {
-            for (int xPos = 0; xPos < 8; xPos++) {
-                Piece a = board[yPos][xPos];
-                if (a != null){
-                    if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
-                        cords[0] = xPos;
-                        cords[1] = yPos;
-                    }
-                }
+
+    public ArrayList<int[]> findPosCheckingPieces(int xPosKing, int yPosKing, boolean isKingWhite) {
+      ArrayList<int[]> output = new ArrayList<int[]>();
+      for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8; col++) {
+          Piece p = board[col][row];
+          if (p != null) {
+            if (p.isLegalMove(this, col, row, xPosKing, yPosKing) == true && p.isWhite() != isKingWhite) {
+              output.add(new int[] {col, row});
             }
+          }
         }
-        return cords;
+      }
+      return output;
     }
-    public int[] findKing(boolean isWhite){
-        int[] result = new int[2];
-        for (int yPos = 0; yPos < 8; yPos++) {
-            for (int xPos = 0; xPos < 8; xPos++) {
-                Piece k = board[yPos][xPos];
-                    if (k != null) {
-                        if (k.getClass() == King.class && k.isWhite() == isWhite) {
-                            result[0] = yPos;
-                            result[1] = xPos;
-                            return result;
-                        }
-                    }
-                }
-            }
-        return result;
-        }
 
-
-    // public ArrayList<int[]> findPosCheckingPieces(int xPos, int yPos, boolean whiteSquare) {
-    //   ArrayList<int[]> output = new ArrayList<int[]>();
-    //   for (int row = 0)
-    //   return output;
+    // public int[] cordsCheckingPiece(int xPosKing, int yPosKing, boolean isKingWhite){
+    //     for (int yPos = 0; yPos < 8; yPos++) {
+    //         for (int xPos = 0; xPos < 8; xPos++) {
+    //             Piece a = board[yPos][xPos];
+    //             if (a != null){
+    //                 if(a.isLegalMove(this, xPos, yPos, xPosKing, yPosKing) == true && a.isWhite() != isKingWhite) {
+    //                     cords[0] = xPos;
+    //                     cords[1] = yPos;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return cords;
     // }
+
+    // returns -1, -1 if not found
+    public int[] findKing(boolean isWhite) {
+      int[] result = {-1, -1};
+      for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < 8; row++) {
+          Piece p = board[row][col];
+          if (p != null) {
+            if (p instanceof King && p.isWhite() == isWhite) {
+              result[0] = col;
+              result[1] = row;
+              return result;
+            }
+          }
+        }
+      }
+      return result;
+    }
 
     public String toString() {
       String output = "";

@@ -263,9 +263,11 @@ class Bishop extends Piece {
         }
       }
 
+      System.out.println("start");
       if ((startY - endY) / (startX - endX) == 1) {
           if (endX > startX) {
               for (int i = startX + 1, j = startY - 1; i > endX && j < endY; i++, j--) {
+                  System.out.println("row: " + i + ", col: " + j);
                   if (board.getPiece(i, j) != null) {
                       return false;
                   }
@@ -273,6 +275,7 @@ class Bishop extends Piece {
           }
           else {
               for (int i = startX - 1, j = startY + 1; i < endX && j > endY; i--, j++) {
+                  System.out.println("row: " + i + ", col: " + j);
                   if (board.getPiece(i, j) != null) {
                       return false;
                   }
@@ -282,6 +285,7 @@ class Bishop extends Piece {
       else if ((startY - endY) / (startX - endX) == -1) {
           if (endX > startX){
               for (int i = startX + 1, j = startY + 1; i > endX && j > endY; i++, j++) {
+                  System.out.println("row: " + i + ", col: " + j);
                   if (board.getPiece(i, j) != null) {
                       return false;
                   }
@@ -289,6 +293,7 @@ class Bishop extends Piece {
           }
           else {
               for (int i = startX - 1, j = startY - 1; i < endX && j < endY; i--, j--) {
+                  System.out.println("row: " + i + ", col: " + j);
                   if (board.getPiece(i, j) != null) {
                       return false;
                   }
