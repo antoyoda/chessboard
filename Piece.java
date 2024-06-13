@@ -263,48 +263,26 @@ class Bishop extends Piece {
         }
       }
 
-      System.out.println("start");
-      if ((startY - endY) / (startX - endX) == 1) {
-          if (endX > startX) {
-              for (int i = startX + 1, j = startY - 1; i > endX && j < endY; i++, j--) {
-                  System.out.println("row: " + i + ", col: " + j);
-                  if (board.getPiece(i, j) != null) {
-                      return false;
-                  }
-              }
-          }
-          else {
-              for (int i = startX - 1, j = startY + 1; i < endX && j > endY; i--, j++) {
-                  System.out.println("row: " + i + ", col: " + j);
-                  if (board.getPiece(i, j) != null) {
-                      return false;
-                  }
-              }
-          }
+      // Check if the move is diagonal
+      if (Math.abs(startX - endX) != Math.abs(startY - endY)) {
+        return false;
       }
-      else if ((startY - endY) / (startX - endX) == -1) {
-          if (endX > startX){
-              for (int i = startX + 1, j = startY + 1; i > endX && j > endY; i++, j++) {
-                  System.out.println("row: " + i + ", col: " + j);
-                  if (board.getPiece(i, j) != null) {
-                      return false;
-                  }
-              }
-          }
-          else {
-              for (int i = startX - 1, j = startY - 1; i < endX && j < endY; i--, j--) {
-                  System.out.println("row: " + i + ", col: " + j);
-                  if (board.getPiece(i, j) != null) {
-                      return false;
-                  }
-              }
-          }
-      }
-      else {
-          return false;
+
+      int xDirection = endX > startX ? 1 : -1;
+      int yDirection = endY > startY ? 1 : -1;
+
+      int x = startX + xDirection;
+      int y = startY + yDirection;
+
+      while (x != endX && y != endY) {
+        if (board.getPiece(x, y) != null) {
+            return false;
+        }
+        x += xDirection;
+        y += yDirection;
       }
       return true;
-  }
+    }
 }
 class Queen extends Piece {
     private Piece rookDelegate;

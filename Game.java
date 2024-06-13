@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Game {
   private Board board = new Board();
@@ -156,35 +157,76 @@ public class Game {
       return false;
   }
 
-  // private boolean isCheckMate(boolean checkWhite) {
-  //   // find King
-  //   int [] Kingcords = board.findKing(checkWhite);
-  //   int y = Kingcords[0];
-  //   int x = Kingords[1];
-  //   // if NOT in check
-  //   if (board.isSquareInCheck(x, y, checkWhite) != true)
-  //       return false;
-  //   //if in check
-  //   else {
-  //     //if in double check
-  //     if (board.findCheckingPieces(x, y, checkWhite) > 1){
-  //       int [] cords = board.cordsCheckingPiece(x, y, checkWhite);
-  //       int xPos = cords[0];
-  //       int yPos = cords[1];
-  //       //check all possible king moves
-  //       if (xPos == 0 || xPos = 7)
-  //     }
-  //     //check possible king moves and if a piece can obstruct the checking piece
-  //     else {
-  //
-  //     }
-  //   }
-  //
-  //   return false;
-  // }
+  private boolean isCheckmate(boolean kingIsWhite) {
+    // find King
+    int [] kingPos = board.findKing(kingIsWhite);
+    int x = kingPos[0];
+    int y = kingPos[1];
+    int checkingPieces = board.findNumCheckingPieces(x, y, kingIsWhite);
+    // if NOT in check
+    if (checkingPieces == 0) {
+      return false;
+    }
+    // if in check
+    else {
+      // see if king can run
+      boolean canRun = false;
+      for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+          // skip king
+          if (dx == 0 && dy == 0) {
+            continue;
+          }
 
-  private boolean isStaleMate() {
+          int newX = x + dx;
+          int newY = y + dy;
+          if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7) {
+            // skip same color piece
+            Piece p = board.getPiece(newX, newY);
+            if (p != null) {
+              if (p.isWhite() == kingIsWhite) {
+                continue;
+              }
+            }
+            // clone board, move king there, and check if in check
+            Board clone = new Board(board);
+            clone.movePiece(x, y, newX, newY);
+            if (!clone.isSquareInCheck(newX, newY, kingIsWhite)) {
+              return false;
+            }
+          }
+        }
+      }
+      // after this point, king can't run anywhere safely
+      if (checkingPieces > 1) {
+        // always checkmate because King can't run and two pieces are checking it, which can't be both blocked and taken
+        return true;
+      }
+      else {
+        ArrayList<int[]> attackingPiecePos = board.findPosCheckingPieces(x, y, kingIsWhite);
+        int attackingX = attackingPiecePos.get(0)[0];
+        int attackingY = attackingPiecePos.get(0)[1];
+        // see if piece can be taken
+        if (board.isSquareInCheck(attackingX, attackingY, !kingIsWhite)) {
+          // find each pos of the pieces that can take the checking piece
+          ArrayList<int[]> takingPiecesPos = board.findPosCheckingPieces(attackingX, attackingY, !kingIsWhite);
+          // create clone of board and make sure king isn't in check after the piece is taken (prevents escaping pins)
+          for (int[] positions : takingPiecesPos) {
+            Board clone2 = new Board(board);
+            clone2.movePiece(positions[0], positions[1], attackingX, attackingY);
+            if (!clone2.isSquareInCheck(x, y, kingIsWhite)) {
+              return false;
+            }
+          }
+        }
+        // after this, king can't move and it's attacking pieces can't be taken
+        // we need to see if you are able to interpose (only for rooks, queens and bishops)
+      }
+    }
+    return false;
+  }
 
+  private boolean isStalemate() {
       return false;
   }
 
