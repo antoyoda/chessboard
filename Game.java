@@ -222,8 +222,80 @@ public class Game {
         // after this, king can't move and it's attacking pieces can't be taken
         // we need to see if you are able to interpose (only for rooks, queens and bishops)
       }
+      ArrayList<int[]> interpose = board.findPosCheckingPieces(x, y, kingIsWhite);
+      int interposeX = interpose.get(0)[0];
+      int interposeY = interpose.get(0)[1];
+      Piece A = board.getPiece(interposeX, interposeY);
+      // if the checking piece is a rook
+      if (A.getClass() == Rook.java){
+        for (int i = 0; i<8; i++){
+          for (int j = 0; j < 8; j++){
+            //Search for all pices with the same color as the king
+            if (board.getPiece(j,i).isWhite() == kingIsWhite){
+              //if Checking pieces in on the same x axis
+              if (interposeX == x) {
+                //if checking piece is below king
+                if (interposeY > y) {
+                  for (int k = interposeY-1; k > y; k--){
+                    if(board.getPiece(j,i).isLegalMove(board, j, i, x, k) == true){
+                      return false;
+                    }
+                  }
+                }
+                //if checking piece is above king
+                else {
+                  for (int k = y-1; k > interposeY; k--){
+                    if(board.getPiece(j,i).isLegalMove(board, j, i, x, k) == true){
+                      return false;
+                    }
+                  }
+                }
+              }
+              //if checking pice is on the same y axis
+              else {
+                if (interposeY == y) {
+                  // if piece is to the right of the king
+                  if (interposeX > x) {
+                    for (int k = interposeX-1; k > x; k--){
+                      if(board.getPiece(j,i).isLegalMove(board, j, i, y, k) == true){
+                        return false;
+                      }
+                    }
+                  }
+                  // if piece is to the left of king
+                  else {
+                    for (int k = x-1; k > interposeX; k--){
+                      if(board.getPiece(j,i).isLegalMove(board, j, i, y, k) == true){
+                        return false;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
     }
     return false;
+  }
+  public void promotion(){
+    Console cnsl = System.console();
+    for (int x = 0; x < 8; x++){
+      if (board.getPiece(x, 0).isWhite() == true && board.getPiece(x, 0).getClass() == Pawn.java){
+        String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
+        if (input.equals("QUEEN")){
+          board.changePiece("Queen", true, x, 0);
+        }
+      }
+      else if (board.getPiece(x, 7).isWhite() == false && board.getPiece(x, 0).getClass() == Pawn.java){
+        String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
+        if (input.equals("QUEEN")){
+          board.changePiece("Queen", false, x, 7);
+        }
+      }
+    }
   }
 
   private boolean isStalemate() {

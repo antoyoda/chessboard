@@ -62,6 +62,9 @@ public class Board {
     }
 
     public Piece[][] getBoard() { return board; }
+    public void changePiece(String change, boolean color, int x, int y){
+        board[x][y] = new Queen(color);
+    }
 
     public Piece getPiece(int xPos, int yPos) {
       return board[yPos][xPos];

@@ -9,6 +9,7 @@ public class Tester {
     while (!stop) {
       System.out.println(g.getBoard());
       g.getMove();
+      // g.promotion();
       // g.switchTurn();
     }
 
