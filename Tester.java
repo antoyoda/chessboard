@@ -2,16 +2,16 @@ import java.util.ArrayList;
 
 public class Tester {
   public static void main(String args[]) {
-    // Game g = new Game();
-    // g.getPlayerNames();
-    // g.assignActivePlayer();
-    // boolean stop = false;
-    // while (!stop) {
-    //   System.out.println(g.getBoard());
-    //   g.getMove();
-    //   // g.promotion();
-    //   // g.switchTurn();
-    // }
+     Game g = new Game();
+     g.getPlayerNames();
+     g.assignActivePlayer();
+     boolean stop = false;
+     while (!stop) {
+       System.out.println(g.getBoard());
+       g.getMove();
+       g.promote();
+       // g.switchTurn();
+     }
 
     // Board s = new Board();
     // s.movePiece(3, 7, 5, 1);
@@ -69,14 +69,16 @@ public class Tester {
     // System.out.println(g5.isCheckmate(false));
 
     // TEST SIX ROOK BACKRANK WITH INNTERPOSITION
-    Game g6 = new Game();
-    Board b5 = new Board();
-    b5.movePiece(4, 0, 1, 0);
-    b5.movePiece(2, 0, 3, 0);
-    b5.movePiece(0, 7, 3, 0);
-    b5.movePiece(6, 0, 1, 2);
-    System.out.println(b5);
-    g6.switchBoard(b5);
-    System.out.println(g6.isCheckmate(false));
+//    Game g6 = new Game();
+//    Board b5 = new Board();
+//    b5.movePiece(0, 7, 0, 0);
+//    g6.promotion();
+//    b5.movePiece(2, 0, 3, 0);
+//    b5.movePiece(0, 7, 3, 0);
+//    b5.movePiece(6, 0, 1, 2);
+
+//    System.out.println(b5);
+//    g6.switchBoard(b5);
+//    System.out.println(g6.isCheckmate(false));
   }
 }

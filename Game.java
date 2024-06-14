@@ -303,23 +303,26 @@ public class Game {
     return true;
   }
 
-  // public void promotion(){
-  //   Console cnsl = System.console();
-  //   for (int x = 0; x < 8; x++){
-  //     if (board.getPiece(x, 0).isWhite() == true && board.getPiece(x, 0).getClass() == Pawn.java){
-  //       String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
-  //       if (input.equals("QUEEN")){
-  //         board.changePiece("Queen", true, x, 0);
-  //       }
-  //     }
-  //     else if (board.getPiece(x, 7).isWhite() == false && board.getPiece(x, 0).getClass() == Pawn.java){
-  //       String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
-  //       if (input.equals("QUEEN")){
-  //         board.changePiece("Queen", false, x, 7);
-  //       }
-  //     }
-  //   }
-  // }
+   public void promote(){
+     Console cnsl = System.console();
+     for (int x = 0; x < 8; x++){
+       if (board.getPiece(x, 0) == null || board.getPiece(x, 7) == null){
+         continue;
+       }
+       if (board.getPiece(x, 0).isWhite() == true && board.getPiece(x, 0) instanceof Pawn){
+         String input = cnsl.readLine("What piece would you like to promote your pawn to? (Answer in all caps ex.QUEEN)").trim();
+         if (input.equals("QUEEN")){
+           board.changePiece("Queen", true, x, 0);
+         }
+       }
+       else if (board.getPiece(x, 7).isWhite() == false && board.getPiece(x, 0) instanceof Pawn){
+         String input = cnsl.readLine("What piece would you like to promote your pawn to? (Answer in all caps ex.QUEEN)").trim();
+         if (input.equals("QUEEN")){
+           board.changePiece("Queen", false, x, 7);
+         }
+       }
+     }
+   }
 
   private boolean isStalemate() {
       return false;

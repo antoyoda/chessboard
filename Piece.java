@@ -305,9 +305,72 @@ class King extends Piece {
       hasMoved = piece.hasMoved();
     }
 
-    // public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {}
-    // public boolean canCastleKingside() {}
-    // public boolean canCastleQueenside() {}
+     public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+        if (board.isSquareInCheck(endX, endY, this.isWhite()) == true){
+            return false;
+        }
+        if (Math.abs(startX - endX) >1) {
+            if (canCastle(board, startX, startY, endX, endY, this.isWhite()) == true){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (Math.abs(startY - endY) >1) {
+            return false;
+        }
+        return true;
+     }
+     public boolean canCastle(Board b, int startX, int startY, int endX, int endY, boolean isWhite) {
+        if (this.hasMoved = false){
+            if (isWhite == true){
+                if (endX == 2 && endY == startY){
+                    if(b.getPiece(0,7).hasMoved() == false){
+                        for (int x = 1; x<startX; x++){
+                            if (b.getPiece(x,7) != null){
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+                else if (endX == 6 && endY == startY){
+                    if(b.getPiece(7,7).hasMoved() == false){
+                        for (int x = startX +1; x<7; x++){
+                            if (b.getPiece(x,7) != null){
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+            else{
+                if (endX == 2 && endY == startY){
+                    if(b.getPiece(0,0).hasMoved() == false){
+                        for (int x = 1; x<startX; x++){
+                            if (b.getPiece(x,0) != null){
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+                else if (endX == 6 && endY == startY){
+                    if(b.getPiece(7,0).hasMoved() == false){
+                        for (int x = startX +1; x<7; x++){
+                            if (b.getPiece(x,0) != null){
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+         return true;
+     }
 
     public void moved() {
       hasMoved = true;
