@@ -45,7 +45,7 @@ class Pawn extends Piece {
     public boolean isLegalMove(Board board, int startX, int startY,  int endX, int endY) {
         // add en passant later -- has moved that expires after one move
         if (isWhite()) {
-            if (endY > startY) { // if same row/backwards
+            if (endY >= startY) { // if same row/backwards
               return false;
             }
             if (Math.abs(endX - startX) > 1) { // if moving to the side by two or more
@@ -94,7 +94,7 @@ class Pawn extends Piece {
             }
         }
         else {
-          if (endY < startY) { // if same row/backwards
+          if (endY <= startY) { // if same row/backwards
             return false;
           }
           if (Math.abs(endX - startX) > 1) { // if moving to the side by two or more
@@ -159,49 +159,27 @@ class Rook extends Piece {
       hasMoved = piece.hasMoved();
     }
 
-    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-        if (board.getPiece(endX, endY) != null) {
-            if (board.getPiece(endX, endY).isWhite() == isWhite()) {
-                return false;
-            }
-        }
-        if (endX == startX) {
-            if (endY > startY) {
-                for(int i = endY-1; i > startY; i--) {
-                    if(!(board.getPiece(startX, i) == null)) {
-                      return false;
-                    }
-                }
-            }
-            else if (endY < startY) {
-                for(int i = startY-1; i > endY; i--) {
-                    if(!(board.getPiece(startX, i) == null)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else if (endY == startY) {
-            if (endX > startX) {
-                for (int i = endX-1; i > startX; i--) {
-                    if (!(board.getPiece(i,startY) == null)) {
-                        return false;
-                    }
-                }
-            }
-            else if (endX < startX) {
-                for (int i = startX+1; i < endX; i--) {
-                    if (!(board.getPiece(i, startY) == null)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        else {
-            return false;
-        }
-        return true;
-    }
+    // 7, 0, ends, 1, 0
+    // public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+    //     if (board.getPiece(endX, endY) != null) {
+    //         if (board.getPiece(endX, endY).isWhite() == isWhite()) {
+    //             return false;
+    //         }
+    //     }
+    //     if (endX == startX) {
+    //         if (endY == startY) {
+    //           return false;
+    //         }
+    //         int step = ()
+    //     }
+    //     else if (endY == startY) {
+    //
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     public void moved() {
       hasMoved = true;

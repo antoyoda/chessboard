@@ -62,6 +62,7 @@ public class Board {
     }
 
     public Piece[][] getBoard() { return board; }
+
     public void changePiece(String change, boolean color, int x, int y){
         board[x][y] = new Queen(color);
     }
@@ -151,31 +152,58 @@ public class Board {
       return result;
     }
 
-    public String toString() {
-      String output = "";
-      for (int i = 0; i < length; i++) {
-        for (int j = 0; j < length; j++) {
-          if (j == 0) {
-            output += (8-i + " ");
-          }
-          if (board[i][j] != null) {
-            if (board[i][j].isWhite()) {
-              // 34 is blue, 31 is red, 0 is default
-              output += "\u001B[34m" + board[i][j].toString() + "\u001B[0m";
-              output += " ";
+    // public String toString() {
+    //   String output = "";
+    //   for (int i = 0; i < length; i++) {
+    //     for (int j = 0; j < length; j++) {
+    //       if (j == 0) {
+    //         output += (8-i + " ");
+    //       }
+    //       if (board[i][j] != null) {
+    //         if (board[i][j].isWhite()) {
+    //           // 34 is blue, 31 is red, 0 is default
+    //           output += "\u001B[34m" + board[i][j].toString() + "\u001B[0m";
+    //           output += " ";
+    //         }
+    //         else {
+    //           output += "\u001B[31m" + board[i][j].toString() + "\u001B[0m";
+    //           output += " ";
+    //         }
+    //       }
+    //       else {
+    //         output += "  ";
+    //       }
+    //     }
+    //       output += "\n";
+    //   }
+    //   output += "  a b c d e f g h";
+    //   return output;
+
+      public String toString() {
+        String output = "";
+        for (int i = 0; i < length; i++) {
+          for (int j = 0; j < length; j++) {
+            if (j == 0) {
+              output += (i + " ");
+            }
+            if (board[i][j] != null) {
+              if (board[i][j].isWhite()) {
+                // 34 is blue, 31 is red, 0 is default
+                output += "\u001B[34m" + board[i][j].toString() + "\u001B[0m";
+                output += " ";
+              }
+              else {
+                output += "\u001B[31m" + board[i][j].toString() + "\u001B[0m";
+                output += " ";
+              }
             }
             else {
-              output += "\u001B[31m" + board[i][j].toString() + "\u001B[0m";
-              output += " ";
+              output += "  ";
             }
           }
-          else {
-            output += "  ";
-          }
+            output += "\n";
         }
-          output += "\n";
-      }
-      output += "  a b c d e f g h";
-      return output;
+        output += "  0 1 2 3 4 5 6 7";
+        return output;
     }
 }

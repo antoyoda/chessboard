@@ -32,6 +32,11 @@ public class Game {
     return arrayNotation;
   }
 
+  // for troubleshooting
+  public void switchBoard(Board other) {
+    this.board = other;
+  }
+
   public Board getBoard() { return board; }
 
   public Player getActivePlayer() { return activePlayer; }
@@ -157,7 +162,7 @@ public class Game {
       return false;
   }
 
-  private boolean isCheckmate(boolean kingIsWhite) {
+  public boolean isCheckmate(boolean kingIsWhite) {
     // find King
     int [] kingPos = board.findKing(kingIsWhite);
     int x = kingPos[0];
@@ -165,6 +170,7 @@ public class Game {
     int checkingPieces = board.findNumCheckingPieces(x, y, kingIsWhite);
     // if NOT in check
     if (checkingPieces == 0) {
+      System.out.println("Here! - 0");
       return false;
     }
     // if in check
@@ -192,6 +198,7 @@ public class Game {
             Board clone = new Board(board);
             clone.movePiece(x, y, newX, newY);
             if (!clone.isSquareInCheck(newX, newY, kingIsWhite)) {
+              System.out.println("Here! - 1");
               return false;
             }
           }
@@ -211,92 +218,105 @@ public class Game {
           // find each pos of the pieces that can take the checking piece
           ArrayList<int[]> takingPiecesPos = board.findPosCheckingPieces(attackingX, attackingY, !kingIsWhite);
           // create clone of board and make sure king isn't in check after the piece is taken (prevents escaping pins)
+          System.out.println(takingPiecesPos.get(0)[0] + " " + takingPiecesPos.get(0)[1]);
           for (int[] positions : takingPiecesPos) {
             Board clone2 = new Board(board);
             clone2.movePiece(positions[0], positions[1], attackingX, attackingY);
             if (!clone2.isSquareInCheck(x, y, kingIsWhite)) {
+              System.out.println("Here! - 2");
               return false;
             }
           }
         }
         // after this, king can't move and it's attacking pieces can't be taken
         // we need to see if you are able to interpose (only for rooks, queens and bishops)
-      }
-      ArrayList<int[]> interpose = board.findPosCheckingPieces(x, y, kingIsWhite);
-      int interposeX = interpose.get(0)[0];
-      int interposeY = interpose.get(0)[1];
-      Piece A = board.getPiece(interposeX, interposeY);
-      // if the checking piece is a rook
-      if (A.getClass() == Rook.java){
-        for (int i = 0; i<8; i++){
-          for (int j = 0; j < 8; j++){
-            //Search for all pices with the same color as the king
-            if (board.getPiece(j,i).isWhite() == kingIsWhite){
-              //if Checking pieces in on the same x axis
-              if (interposeX == x) {
-                //if checking piece is below king
-                if (interposeY > y) {
-                  for (int k = interposeY-1; k > y; k--){
-                    if(board.getPiece(j,i).isLegalMove(board, j, i, x, k) == true){
-                      return false;
-                    }
-                  }
-                }
-                //if checking piece is above king
-                else {
-                  for (int k = y-1; k > interposeY; k--){
-                    if(board.getPiece(j,i).isLegalMove(board, j, i, x, k) == true){
-                      return false;
-                    }
-                  }
-                }
-              }
-              //if checking pice is on the same y axis
-              else {
-                if (interposeY == y) {
-                  // if piece is to the right of the king
-                  if (interposeX > x) {
-                    for (int k = interposeX-1; k > x; k--){
-                      if(board.getPiece(j,i).isLegalMove(board, j, i, y, k) == true){
-                        return false;
-                      }
-                    }
-                  }
-                  // if piece is to the left of king
-                  else {
-                    for (int k = x-1; k > interposeX; k--){
-                      if(board.getPiece(j,i).isLegalMove(board, j, i, y, k) == true){
-                        return false;
-                      }
-                    }
-                  }
+        Piece attacker = board.getPiece(attackingX, attackingY);
+        if (attacker instanceof Pawn || attacker instanceof Knight) {
+          return true;
+        }
+        // rook or queen on the same column
+        if (attackingX == x) {
+          int step = (attackingY > y) ? 1 : -1;
+          for (int i = y + step; i < attackingY; i += step) {
+            // for each coords x, i, find interposing pieces, and if king is not in check after moving there, return false
+            if (board.isSquareInCheck(x, i, kingIsWhite)) {
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(x, i, kingIsWhite);
+              for (int[] pos : interposingPieces) {
+                Board clone3 = new Board(board);
+                clone3.movePiece(pos[0], pos[1], x, i);
+                if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
+                  System.out.println("Here! - 3");
+                  return false;
                 }
               }
             }
           }
         }
-      }
+        // rook or queen on the same row
+        else if (attackingY == y) {
+          int step = (attackingX > x) ? 1 : -1;
+          for (int i = x + step; i < attackingX; i += step) {
+            // for each coords i, y, find interposing pieces, and if king is not in check after moving there, return false
+            if (board.isSquareInCheck(i, y, kingIsWhite)) {
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(i, y, kingIsWhite);
+              for (int[] pos : interposingPieces) {
+                Board clone3 = new Board(board);
+                clone3.movePiece(pos[0], pos[1], i, y);
+                if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
+                  System.out.println("Here! - 4");
+                  return false;
+                }
+              }
+            }
+          }
+        }
+        else {
+          // MUST be bishop or queen from diagonal
+          int xDirection = (attackingX > x) ? 1 : -1;
+          int yDirection = (attackingY > y) ? 1 : -1;
 
-    }
-    return false;
-  }
-  public void promotion(){
-    Console cnsl = System.console();
-    for (int x = 0; x < 8; x++){
-      if (board.getPiece(x, 0).isWhite() == true && board.getPiece(x, 0).getClass() == Pawn.java){
-        String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
-        if (input.equals("QUEEN")){
-          board.changePiece("Queen", true, x, 0);
+          int xPath = x + xDirection;
+          int yPath = y + yDirection;
+
+          // check all the places along the way
+          while (xPath != attackingX && yPath != attackingY) {
+            if (board.isSquareInCheck(xPath, yPath, kingIsWhite)) {
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(xPath, yPath, kingIsWhite);
+              for (int[] pos : interposingPieces) {
+                Board clone3 = new Board(board);
+                clone3.movePiece(pos[0], pos[1], xPath, yPath);
+                if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
+                  System.out.println("Here! - 5");
+                  return false;
+                }
+              }
+            }
+            xPath += xDirection;
+            yPath += yDirection;
+          }
         }
       }
-      else if (board.getPiece(x, 7).isWhite() == false && board.getPiece(x, 0).getClass() == Pawn.java){
-        String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
-        if (input.equals("QUEEN")){
-          board.changePiece("Queen", false, x, 7);
-        }
-      }
     }
+    return true;
   }
+
+  // public void promotion(){
+  //   Console cnsl = System.console();
+  //   for (int x = 0; x < 8; x++){
+  //     if (board.getPiece(x, 0).isWhite() == true && board.getPiece(x, 0).getClass() == Pawn.java){
+  //       String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
+  //       if (input.equals("QUEEN")){
+  //         board.changePiece("Queen", true, x, 0);
+  //       }
+  //     }
+  //     else if (board.getPiece(x, 7).isWhite() == false && board.getPiece(x, 0).getClass() == Pawn.java){
+  //       String input = cnsl.readLine("What piece would you like to promote your pawn to? ").trim();
+  //       if (input.equals("QUEEN")){
+  //         board.changePiece("Queen", false, x, 7);
+  //       }
+  //     }
+  //   }
+  // }
 
   private boolean isStalemate() {
       return false;
