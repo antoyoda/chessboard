@@ -306,10 +306,6 @@ class King extends Piece {
       hasMoved = piece.hasMoved();
     }
 
-    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
-      return true;
-    }
-
     public boolean canCastleKingside(Board board) {
       // check if king moved
       if (hasMoved) { return false; }
@@ -367,6 +363,81 @@ class King extends Piece {
       }
       return true;
     }
+
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      // check is king in check if it moves there
+      Board clone = new Board(board);
+      clone.movePiece(startX, startY, endX, endY);
+      if (clone.isSquareInCheck(endX, endY, isWhite())) {
+        return false;
+      }
+      // check if it's your piece there
+      Piece p = board.getPiece(endX, endY);
+      if (p != null) {
+        if (p.isWhite() == isWhite()) { return false; }
+      }
+      // castling
+      if (startX == 4) {
+        // white
+        if (startY == 7) {
+          // queenside castling
+          if (endX == 2) {
+            if (endY == 7) {
+              if (this.canCastleQueenside(board)) {
+                board.movePiece(0, 7, 3, 7);
+                return true;
+              }
+              return false;
+            }
+            else { return false; }
+          }
+          // kingside
+          if (endX == 6) {
+            if (endY == 7) {
+              if (this.canCastleKingside(board)) {
+                board.movePiece(7, 7, 5, 7);
+                return true;
+              }
+              return false;
+            }
+            else { return false; }
+          }
+        }
+        // black
+        else if (startY == 0) {
+          if (endX == 2) {
+            if (endY == 0) {
+              if (this.canCastleQueenside(board)) {
+                board.movePiece(0, 0, 3, 0);
+                return true;
+              }
+              return false;
+            }
+            else { return false; }
+          }
+          // kingside
+          if (endX == 6) {
+            if (endY == 0) {
+              if (this.canCastleKingside(board)) {
+                board.movePiece(7, 0, 5, 0);
+                return true;
+              }
+              return false;
+            }
+            else { return false; }
+          }
+        }
+      }
+
+      // check can you move there
+      if (Math.abs(startX - endX) != 1) {
+        return false;
+      }
+      if (Math.abs(startY - endY) != 1) {
+        return false;
+      }
+      return true;
+     }
 
     public void moved() {
       hasMoved = true;

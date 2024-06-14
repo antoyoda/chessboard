@@ -4,25 +4,7 @@ public class Tester {
   public static void main(String args[]) {
     Game g = new Game();
     g.start();
-    // Game g = new Game();
-    // g.getPlayerNames();
-    // g.assignActivePlayer();
-    // boolean stop = false;
-    // while (!stop) {
-    //   System.out.println(g.getBoard());
-    //   g.getMove();
-    //   // g.promotion();
-    //   // g.switchTurn();
-    // }
-    //
-    // Board s = new Board();
-    // s.movePiece(3, 7, 5, 1);
-    // s.movePiece(6, 7, 4, 3);
-    // System.out.println(s);
-    // System.out.println(s.getPiece(4, 1).isLegalMove(s, 4, 1, 5, 1));
-    //
-    // check troubleshooting
-    //
+
     // // TEST ONE KNIGHT CHECKMATE
     // Game g1 = new Game();
     // Board b = new Board();

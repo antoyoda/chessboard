@@ -85,7 +85,9 @@ public class Board {
       }
       board[endY][endX] = board[startY][startX];
       board[startY][startX] = null;
-      board[endY][endX].moved();
+      if (board[endY][endX] != null) {
+        board[endY][endX].moved();
+      }
     }
 
     public boolean isSquareInCheck(int xPos, int yPos, boolean isWhiteSquare) {
