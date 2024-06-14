@@ -47,13 +47,15 @@ public class Game {
 
     System.out.println("Game started between " + white.getName() + " and " + black.getName());
 
-    // while (!isGameOver()) {
-    //   System.out.println(board);
-    //   //getMove();
-    //   switchTurn();
-    // }
+    while (!isCheckmate(activePlayer.isWhite())) {
+       System.out.println(board);
+       getMove();
+       switchTurn();
+    }
 
-    System.out.println("The game is over!");
+    System.out.println(board);
+    String winnerName = activePlayer.isWhite() ? black.getName() : white.getName();
+    System.out.println("The game is over! " + winnerName + " checkmated " + activePlayer.getName() + "!");
   }
 
   // initializes player names
@@ -156,12 +158,6 @@ public class Game {
     }
   }
 
-  private boolean isGameOver() {
-    // logic to check checkmate, stalemate, draw by repetition?, 50 move rule?
-
-      return false;
-  }
-
   public boolean isCheckmate(boolean kingIsWhite) {
     // find King
     int [] kingPos = board.findKing(kingIsWhite);
@@ -170,7 +166,6 @@ public class Game {
     int checkingPieces = board.findNumCheckingPieces(x, y, kingIsWhite);
     // if NOT in check
     if (checkingPieces == 0) {
-      System.out.println("Here! - 0");
       return false;
     }
     // if in check
@@ -198,7 +193,6 @@ public class Game {
             Board clone = new Board(board);
             clone.movePiece(x, y, newX, newY);
             if (!clone.isSquareInCheck(newX, newY, kingIsWhite)) {
-              System.out.println("Here! - 1");
               return false;
             }
           }
@@ -218,12 +212,10 @@ public class Game {
           // find each pos of the pieces that can take the checking piece
           ArrayList<int[]> takingPiecesPos = board.findPosCheckingPieces(attackingX, attackingY, !kingIsWhite);
           // create clone of board and make sure king isn't in check after the piece is taken (prevents escaping pins)
-          System.out.println(takingPiecesPos.get(0)[0] + " " + takingPiecesPos.get(0)[1]);
           for (int[] positions : takingPiecesPos) {
             Board clone2 = new Board(board);
             clone2.movePiece(positions[0], positions[1], attackingX, attackingY);
             if (!clone2.isSquareInCheck(x, y, kingIsWhite)) {
-              System.out.println("Here! - 2");
               return false;
             }
           }
@@ -240,12 +232,11 @@ public class Game {
           for (int i = y + step; i < attackingY; i += step) {
             // for each coords x, i, find interposing pieces, and if king is not in check after moving there, return false
             if (board.isSquareInCheck(x, i, kingIsWhite)) {
-              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(x, i, kingIsWhite);
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(x, i, !kingIsWhite);
               for (int[] pos : interposingPieces) {
                 Board clone3 = new Board(board);
                 clone3.movePiece(pos[0], pos[1], x, i);
                 if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
-                  System.out.println("Here! - 3");
                   return false;
                 }
               }
@@ -254,19 +245,16 @@ public class Game {
         }
         // rook or queen on the same row
         else if (attackingY == y) {
-          System.out.println("yEah!");
           int step = (attackingX > x) ? 1 : -1;
           System.out.println(step);
           for (int i = x + step; i < attackingX; i += step) {
             // for each coords i, y, find interposing pieces, and if king is not in check after moving there, return false
             if (board.isSquareInCheck(i, y, kingIsWhite)) {
-              System.out.println("i: " + i + ", y " + y);
-              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(i, y, kingIsWhite);
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(i, y, !kingIsWhite);
               for (int[] pos : interposingPieces) {
                 Board clone3 = new Board(board);
                 clone3.movePiece(pos[0], pos[1], i, y);
                 if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
-                  System.out.println("Here! - 4");
                   return false;
                 }
               }
@@ -284,12 +272,11 @@ public class Game {
           // check all the places along the way
           while (xPath != attackingX && yPath != attackingY) {
             if (board.isSquareInCheck(xPath, yPath, kingIsWhite)) {
-              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(xPath, yPath, kingIsWhite);
+              ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(xPath, yPath, !kingIsWhite);
               for (int[] pos : interposingPieces) {
                 Board clone3 = new Board(board);
                 clone3.movePiece(pos[0], pos[1], xPath, yPath);
                 if (!clone3.isSquareInCheck(x, y, kingIsWhite)) {
-                  System.out.println("Here! - 5");
                   return false;
                 }
               }

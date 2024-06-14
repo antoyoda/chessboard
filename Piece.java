@@ -60,7 +60,7 @@ class Pawn extends Piece {
                 if (startY - endY > 2) { // AND moves more than 2
                   return false;
                 }
-                else if (endX - startX == 2) { // AND only moving 2
+                else if (endY - startY == 2) { // AND only moving 2
                   // check piece up and piece up + 1
                   Piece up2 = board.getPiece(startX, startY - 2);
                   if (up1 == null && up2 == null) {
@@ -109,10 +109,11 @@ class Pawn extends Piece {
               if (endY - startY > 2) { // AND moves more than 2
                 return false;
               }
-              else if (endX - startX == 2) { // AND only moving 2
+              else if (endY - startY == 2) { // AND only moving 2
                 // check piece up and piece up + 1
                 Piece up2 = board.getPiece(startX, startY + 2);
                 if (up1 == null && up2 == null) {
+
                   return true; // if nothing there = return true
                 }
                 else {
@@ -305,9 +306,67 @@ class King extends Piece {
       hasMoved = piece.hasMoved();
     }
 
-    // public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {}
-    // public boolean canCastleKingside() {}
-    // public boolean canCastleQueenside() {}
+    public boolean isLegalMove(Board board, int startX, int startY, int endX, int endY) {
+      return true;
+    }
+
+    public boolean canCastleKingside(Board board) {
+      // check if king moved
+      if (hasMoved) { return false; }
+      int y = isWhite() ? 7 : 0;
+      // check rook in the corner
+      Piece r = board.getPiece(7, y);
+      if (r == null) { return false; }
+      if (!r.isWhite()) { return false; }
+      if (!(r instanceof Rook)) { return false; }
+      if (r.hasMoved()) { return false; }
+
+      // check squares king has to move through
+      for (int i = 5; i < 7; i++) {
+        Piece p = board.getPiece(i, y);
+        if (p != null) {
+          return false;
+        }
+        if (board.isSquareInCheck(i, y, isWhite())) {
+          return false;
+        }
+      }
+
+      // check that the square the king is currently on is not under attack
+      if (board.isSquareInCheck(4, y, isWhite())) {
+        return false;
+      }
+      return true;
+    }
+
+    public boolean canCastleQueenside(Board board) {
+      // check if king moved
+      if (hasMoved) { return false; }
+      int y = isWhite() ? 7 : 0;
+      // check rook in the corner
+      Piece r = board.getPiece(0, y);
+      if (r == null) { return false; }
+      if (!r.isWhite()) { return false; }
+      if (!(r instanceof Rook)) { return false; }
+      if (r.hasMoved()) { return false; }
+
+      // check squares king has to move through
+      for (int i = 1; i < 4; i++) {
+        Piece p = board.getPiece(i, y);
+        if (p != null) {
+          return false;
+        }
+        if (board.isSquareInCheck(i, y, isWhite()) && i != 1) {
+          return false;
+        }
+      }
+
+      // check that the square the king is currently on is not under attack
+      if (board.isSquareInCheck(4, y, isWhite())) {
+        return false;
+      }
+      return true;
+    }
 
     public void moved() {
       hasMoved = true;
