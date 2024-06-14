@@ -254,10 +254,13 @@ public class Game {
         }
         // rook or queen on the same row
         else if (attackingY == y) {
+          System.out.println("yEah!");
           int step = (attackingX > x) ? 1 : -1;
+          System.out.println(step);
           for (int i = x + step; i < attackingX; i += step) {
             // for each coords i, y, find interposing pieces, and if king is not in check after moving there, return false
             if (board.isSquareInCheck(i, y, kingIsWhite)) {
+              System.out.println("i: " + i + ", y " + y);
               ArrayList<int[]> interposingPieces = board.findPosCheckingPieces(i, y, kingIsWhite);
               for (int[] pos : interposingPieces) {
                 Board clone3 = new Board(board);
